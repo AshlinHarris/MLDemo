@@ -1,1 +1,1 @@
-C:\Users\aharri69\Files\Desktop\SyntheticMass\10k_synthea_covid19_csv\10k_synthea_covid19_csv
+/Path/To/Data/Files/
