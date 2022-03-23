@@ -11,8 +11,7 @@ using MLJ
 using CSV: File
 using StatsBase: countmap
 
-#include("TestModule.jl")
-using .TestModule
+using .MLDemo
 
 """
 	function main()

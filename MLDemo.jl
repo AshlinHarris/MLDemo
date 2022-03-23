@@ -1,4 +1,4 @@
-module TestModule
+module MLDemo
 
 export get_data, dataframe_subset, list_to_matrix, top_n_values
 
@@ -41,8 +41,8 @@ end
 Convert list-style DataFrame to matrix-style DataFrame
 """
 function list_to_matrix(df::DataFrame)::DataFrame
-	rows = df.PATIENT |> sort |> unique # |> enumerate
-	cols = df.DESCRIPTION |> sort |> unique # |> enumerate
+	rows = df.PATIENT |> sort |> unique
+	cols = df.DESCRIPTION |> sort |> unique
 
 	r_dict = Dict()
 	for k in 1:length(rows)
