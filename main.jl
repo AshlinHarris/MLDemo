@@ -11,9 +11,8 @@ using MLJ
 using CSV: File
 using StatsBase: countmap
 
-macro nameofvariable(x)
-	return string(x)
-end
+#include("TestModule.jl")
+using .TestModule
 
 """
 	function get_data(file_name)::DataFrame
@@ -28,20 +27,6 @@ function get_data(file_name)::DataFrame
 
 	file = joinpath(path, file_name)
 	return File(file, header = 1) |> DataFrame
-end
-
-"""
-	function top_n_values(df, col, n)::Nothing
-
-	Find top n values by occurence
-"""
-function top_n_values(df, col, n)::Nothing
-	name = @nameofvariable(df)
-	println("Top $n values for $col in $name:")
-	x = first(sort(countmap(df[:, col]; alg = :dict), byvalue = true, rev = true), n)
-	show(IOContext(stdout, :limit => false), "text/plain", x)
-	println()
-	return
 end
 
 """
