@@ -4,13 +4,14 @@
 using DataFrames
 #using FilePathsBase
 #using JuliaDB
-using MLJ
 #using Random
 #using ScientificTypesBase
 
-using CSV: File
-using StatsBase: countmap
+using MLJ
+#load_path("DecisionTreeClassifier", pkg="DecisionTree")
+using MLJDecisionTreeInterface
 
+include("src/MLDemo.jl")
 using .MLDemo
 
 """
@@ -54,7 +55,8 @@ function main()
 
 	RNG_VALUE = 2022
 	train, test = partition(eachindex(y), 0.8, shuffle = true, rng = RNG_VALUE)
-	display(models(matching(X, y)))
+	#display(models(matching(X, y)))
+	println()
 
 	Tree = @load DecisionTreeClassifier pkg=DecisionTree verbosity=0
 	tree_model = Tree(max_depth = 3)

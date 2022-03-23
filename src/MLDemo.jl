@@ -1,6 +1,10 @@
 module MLDemo
-
 export get_data, dataframe_subset, list_to_matrix, top_n_values
+
+using DataFrames
+
+using CSV: File
+using StatsBase: countmap
 
 macro nameofvariable(x)
 	return string(x)
