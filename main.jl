@@ -5,6 +5,7 @@ using DataFrames
 #using FilePathsBase
 #using JuliaDB
 #using Random
+#using Revise
 #using ScientificTypesBase
 
 using MLJ
@@ -26,8 +27,8 @@ function main()
 	allergy_df = get_data("allergies.csv")
 
 	# Summarize DataFrames
-	top_n_values(conditions_df, :DESCRIPTION, 12)
-	top_n_values(allergy_df, :DESCRIPTION, 12)
+	@time top_n_values(conditions_df, :DESCRIPTION, 12)
+	@time top_n_values(allergy_df, :DESCRIPTION, 12)
 
 	# Filter DataFrames
 	miscarriage_only = dataframe_subset(conditions_df, "Miscarriage in first trimester")
@@ -66,9 +67,10 @@ function main()
 	yhat = predict(tree, X[test, :])
 
 	acc = accuracy(MLJ.mode.(yhat), y[test]) |> display
+	println()
 	f1_score = f1score(MLJ.mode.(yhat), y[test]) |> display
 
 	return nothing
 end
 
-main()
+@time main()
