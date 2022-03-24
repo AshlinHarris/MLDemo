@@ -7,6 +7,7 @@ using DataFrames
 #using Random
 #using Revise
 #using ScientificTypesBase
+using Traceur
 
 using MLJ
 #load_path("DecisionTreeClassifier", pkg="DecisionTree")

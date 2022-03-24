@@ -18,7 +18,7 @@ Return the contents of a CSV file as a DataFrame
 function get_data(file_name)::DataFrame
 
 	fp = open("config.txt")
-	path= readline(fp)
+	path= strip(readline(fp))
 	close(fp)
 
 	file = joinpath(path, file_name)
