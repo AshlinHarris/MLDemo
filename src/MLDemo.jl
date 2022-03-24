@@ -1,7 +1,11 @@
+__precompile__()
 module MLDemo
-export get_data, dataframe_subset, list_to_matrix, top_n_values
+export get_data, dataframe_subset, list_to_matrix, 	run_decision_tree, top_n_values
 
 using DataFrames
+using MLJ
+#load_path("DecisionTreeClassifier", pkg="DecisionTree")
+using MLJDecisionTreeInterface
 
 using CSV: File
 using StatsBase: countmap
@@ -70,6 +74,30 @@ function list_to_matrix(df::DataFrame)::DataFrame
 	insertcols!(A, 1, :PATIENT => rows, makeunique = true)
 
 	return A
+end
+
+function run_decision_tree(df, output)
+	output = :MISCARRIAGE
+
+	y = df[:, output]
+	X = select(df, Not([:PATIENT, output]))
+	
+	RNG_VALUE = 2022
+	train, test = partition(eachindex(y), 0.8, shuffle = true, rng = RNG_VALUE)
+	#display(models(matching(X, y)))
+	println()
+
+	Tree = @load DecisionTreeClassifier pkg=DecisionTree verbosity=0
+	tree_model = Tree(max_depth = 3)
+	tree = machine(tree_model, X, y)
+
+	fit!(tree, rows = train)
+	yhat = predict(tree, X[test, :])
+
+	acc = accuracy(MLJ.mode.(yhat), y[test])
+	f1_score = f1score(MLJ.mode.(yhat), y[test])
+
+	return acc, f1_score
 end
 
 """
