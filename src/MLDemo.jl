@@ -1,6 +1,6 @@
 __precompile__()
 module MLDemo
-export get_data, dataframe_subset, list_to_matrix, 	run_decision_tree, top_n_values
+export add_target_column!, get_data, dataframe_subset, list_to_matrix, run_decision_tree, top_n_values
 
 using DataFrames
 using MLJ
@@ -12,6 +12,17 @@ using StatsBase: countmap
 
 macro nameofvariable(x)
 	return string(x)
+end
+
+function add_target_column!(df, symb, target_df)
+	insertcols!(df, symb => map(Bool, zeros(nrow(df))), makeunique = true)
+	list = target_df.PATIENT |> unique
+	for x in eachrow(df)
+		if x[:PATIENT] in list
+			x[symb] = true
+		end
+	end
+	#coerce!(df, symb => OrderedFactor{2}) # Why doesn't this work here?
 end
 
 """

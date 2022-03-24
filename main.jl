@@ -33,24 +33,16 @@ function main()
 	miscarriage_only = dataframe_subset(conditions_df, "Miscarriage in first trimester")
 	with_allergies = dataframe_subset(allergy_df, miscarriage_only)
 
-	# Convert list-style DataFrame to matrix-style DataFrame
-	main_df = list_to_matrix(allergy_df)
+	# Generate composite DataFrame
+	composite_df = list_to_matrix(allergy_df)
+	add_target_column!(composite_df, :MISCARRIAGE, miscarriage_only)
+	coerce!(composite_df, :MISCARRIAGE => OrderedFactor{2})
+	describe(composite_df) |> display
 
-	# Add target column
-	insertcols!(main_df, :MISCARRIAGE => map(Bool, zeros(nrow(main_df))), makeunique = true)
-	list = miscarriage_only.PATIENT |> unique
-	for x in eachrow(main_df)
-		if x[:PATIENT] in list
-			x[:MISCARRIAGE] = true
-		end
-	end
-
+	# Machine learning
+	(acc, f1_score)= run_decision_tree(composite_df, :MISCARRAIGE)
 	
-	describe(main_df) |> display
-
-	coerce!(main_df, :MISCARRIAGE => OrderedFactor{2})
-
-	(acc, f1_score)= run_decision_tree(main_df, :MISCARRAIGE)
+	# Results
 	println()
 	println(acc)
 	println(f1_score)
