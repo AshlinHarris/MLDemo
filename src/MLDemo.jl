@@ -14,6 +14,11 @@ macro nameofvariable(x)
 	return string(x)
 end
 
+"""
+	function add_target_column!(df, symb, target_df)
+
+Add column to a DataFrame based on symbol presence in the target DataFrame 
+"""
 function add_target_column!(df, symb, target_df)
 	insertcols!(df, symb => map(Bool, zeros(nrow(df))), makeunique = true)
 	list = target_df.PATIENT |> unique
