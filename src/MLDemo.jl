@@ -92,6 +92,11 @@ function list_to_matrix(df::DataFrame)::DataFrame
 	return A
 end
 
+"""
+	function run_decision_tree(df, output)
+
+Decision tree classifier on a DataFrame over a given output
+"""
 function run_decision_tree(df, output)
 	output = :MISCARRIAGE
 
@@ -119,7 +124,7 @@ end
 """
 	function top_n_values(df, col, n)::Nothing
 
-	Find top n values by occurence
+Find top n values by occurence
 """
 function top_n_values(df, col, n)::Nothing
 	name = @nameofvariable(df)
