@@ -19,7 +19,7 @@ end
 
 Add column to a DataFrame based on symbol presence in the target DataFrame 
 """
-function add_target_column!(df, symb, target_df)
+function add_target_column!(df::DataFrame, symb, target_df::DataFrame)
 	insertcols!(df, symb => map(Bool, zeros(nrow(df))), makeunique = true)
 	list = target_df.PATIENT |> unique
 	for x in eachrow(df)
@@ -97,7 +97,7 @@ end
 
 Decision tree classifier on a DataFrame over a given output
 """
-function run_decision_tree(df, output)
+function run_decision_tree(df::DataFrame, output)
 	output = :MISCARRIAGE
 
 	y = df[:, output]
@@ -126,7 +126,7 @@ end
 
 Find top n values by occurence
 """
-function top_n_values(df, col, n)::Nothing
+function top_n_values(df::DataFrame, col, n)::Nothing
 	name = @nameofvariable(df)
 	println("Top $n values for $col in $name:")
 	x = first(sort(countmap(df[:, col]; alg = :dict), byvalue = true, rev = true), n)
