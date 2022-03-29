@@ -2,6 +2,7 @@ __precompile__()
 module MLDemo
 export add_target_column!, get_data, dataframe_subset, list_to_matrix, run_decision_tree, top_n_values
 
+using ConfParser # Parse, modify, write to configuration files
 using DataFrames
 using MLJ
 #load_path("DecisionTreeClassifier", pkg="DecisionTree")
@@ -37,7 +38,7 @@ Return the contents of a CSV file as a DataFrame
 """
 function get_data(file_name)::DataFrame
 
-	fp = open("config.txt")
+	fp = open("config.ini")
 	path= strip(readline(fp))
 	close(fp)
 
