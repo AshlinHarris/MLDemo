@@ -38,10 +38,10 @@ Return the contents of a CSV file as a DataFrame
 """
 function get_data(file_name)::DataFrame
 
-	fp = open("config.ini")
-	path= strip(readline(fp))
-	close(fp)
-
+	conf = ConfParse("./config.ini")
+	parse_conf!(conf)
+	path = retrieve(conf, "local", "path")
+	
 	file = joinpath(path, file_name)
 	return File(file, header = 1) |> DataFrame
 end
