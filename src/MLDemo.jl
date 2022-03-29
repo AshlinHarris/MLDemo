@@ -70,6 +70,8 @@ Isn't there a one-liner for this?
 """
 function boolean_unstack(df::DataFrame, x::Symbol, y::Symbol)::DataFrame
 
+	#=
+	###OLD METHOD###
 	rows = df[!,x] |> sort |> unique
 	cols = df[!,y] |> sort |> unique
 
@@ -92,15 +94,19 @@ function boolean_unstack(df::DataFrame, x::Symbol, y::Symbol)::DataFrame
 	A = DataFrame([Vector{Bool}(undef, length(rows)) for _ in eachcol(A)], :auto)
 	rename!(A, cols)
 	insertcols!(A, 1, x => rows, makeunique = true)
+	=#
 
-	#B = unstack(df, )
-	#B = unstack(combine(groupby(df, [x, y]), nrow => :count), x, y, :count, allowmissing=true)
-	#B = combine(groupby(df, [x, y]), nrow => :count)
+	###NEW METHOD###
+	B = unstack(combine(groupby(df, [x,y]), nrow => :count), x, y, :count, fill=0)
+	for q in names(select(B, Not(:PATIENT)))
+		B[!,q] = B[!,q] .!= 0
+	end
+	
+	###EXPERIMENTAL###
+	#B = DataFrame(colwise(col -> recode(col, missing=>0), B), names(B)
+	#B = combine(groupby(df, [x,y]), nrow => :count)
 
-	#A |> describe |> println
-	#B |> println
-
-	return A
+	return B
 end
 
 """
