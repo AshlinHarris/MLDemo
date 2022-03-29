@@ -42,7 +42,7 @@ function main()
 	with_allergies = dataframe_subset(allergy_df, miscarriage_only)
 
 	# Generate composite DataFrame
-	composite_df = list_to_matrix(allergy_df, :PATIENT, :DESCRIPTION)
+	composite_df = boolean_unstack(allergy_df, :PATIENT, :DESCRIPTION)
 	#composite_df |> describe |> println
 	#composite_df = pivotView(allergy_df, :PATIENT, :DESCRIPTION)
 	#pivotView(allergy_df, :PATIENT, :DESCRIPTION) |> describe |> println

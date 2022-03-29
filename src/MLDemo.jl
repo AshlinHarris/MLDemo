@@ -1,6 +1,6 @@
 __precompile__()
 module MLDemo
-export add_target_column!, get_data, dataframe_subset, list_to_matrix, run_decision_tree, top_n_values
+export add_target_column!, get_data, dataframe_subset, boolean_unstack, run_decision_tree, top_n_values
 
 using ConfParser # Parse, modify, write to configuration files
 using DataFrames
@@ -62,13 +62,13 @@ end
 
 
 """
-	function list_to_matrix(df::DataFrame)::DataFrame
+	function boolean_unstack(df::DataFrame)::DataFrame
 
 Unstack a DataFrame df by row and column keys x and y
 
 Isn't there a one-liner for this?
 """
-function list_to_matrix(df::DataFrame, x::Symbol, y::Symbol)::DataFrame
+function boolean_unstack(df::DataFrame, x::Symbol, y::Symbol)::DataFrame
 
 	rows = df[!,x] |> sort |> unique
 	cols = df[!,y] |> sort |> unique
