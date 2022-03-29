@@ -64,11 +64,14 @@ end
 """
 	function list_to_matrix(df::DataFrame)::DataFrame
 
-Convert list-style DataFrame to matrix-style DataFrame
+Unstack a DataFrame df by row and column keys x and y
+
+Isn't there a one-liner for this?
 """
-function list_to_matrix(df::DataFrame)::DataFrame
-	rows = df.PATIENT |> sort |> unique
-	cols = df.DESCRIPTION |> sort |> unique
+function list_to_matrix(df::DataFrame, x::Symbol, y::Symbol)::DataFrame
+
+	rows = df[!,x] |> sort |> unique
+	cols = df[!,y] |> sort |> unique
 
 	r_dict = Dict()
 	for k in 1:length(rows)
@@ -80,15 +83,22 @@ function list_to_matrix(df::DataFrame)::DataFrame
 	end
 
 	A = zeros(length(rows), length(cols))
-	for x in eachrow(df)
-		i = r_dict[x.PATIENT]
-		j = c_dict[x.DESCRIPTION]
+	for q in eachrow(df)
+		i = r_dict[q[x]]
+		j = c_dict[q[y]]
 		A[i, j] = true
 	end
 
 	A = DataFrame([Vector{Bool}(undef, length(rows)) for _ in eachcol(A)], :auto)
 	rename!(A, cols)
-	insertcols!(A, 1, :PATIENT => rows, makeunique = true)
+	insertcols!(A, 1, x => rows, makeunique = true)
+
+	#B = unstack(df, )
+	#B = unstack(combine(groupby(df, [x, y]), nrow => :count), x, y, :count, allowmissing=true)
+	#B = combine(groupby(df, [x, y]), nrow => :count)
+
+	#A |> describe |> println
+	#B |> println
 
 	return A
 end
