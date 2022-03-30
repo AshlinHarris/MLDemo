@@ -16,7 +16,7 @@ macro nameofvariable(x)
 end
 
 """
-	function add_target_column!(df, symb, target_df)
+	function add_target_column!(df::AbstractDataFrame, symb::Symbol, target_df::AbstractDataFrame)::Nothing
 
 Add column to a DataFrame based on symbol presence in the target DataFrame 
 """
@@ -34,11 +34,11 @@ end
 
 
 """
-	function get_data(file_name)::AbstractDataFrame
+	function get_data(file_name::String)::AbstractDataFrame
 
 Return the contents of a CSV file as a DataFrame
 """
-function get_data(file_name)::AbstractDataFrame
+function get_data(file_name::String)::AbstractDataFrame
 
 	conf = ConfParse("./config.ini")
 	parse_conf!(conf)
@@ -49,7 +49,7 @@ function get_data(file_name)::AbstractDataFrame
 end
 
 """
-	function dataframe_subset(df::DataFrame, check::Any)::DataFrame
+	function dataframe_subset(df::AbstractDataFrame, check::Any)::AbstractDataFrame
 
 Return a DataFrame subset
 For check::DataFrame, including only PATIENTs present in check
@@ -64,7 +64,7 @@ end
 
 
 """
-	function boolean_unstack(df::DataFrame)::DataFrame
+	function boolean_unstack(df::AbstractDataFrame, x::Symbol, y::Symbol)::AbstractDataFrame
 
 Unstack a DataFrame df by row and column keys x and y
 
@@ -112,7 +112,7 @@ function boolean_unstack(df::AbstractDataFrame, x::Symbol, y::Symbol)::AbstractD
 end
 
 """
-	function run_decision_tree(df, output)
+	function run_decision_tree(df::AbstractDataFrame, output::Symbol)::Tuple{Float64, Float64}
 
 Decision tree classifier on a DataFrame over a given output
 """
@@ -141,11 +141,11 @@ function run_decision_tree(df::AbstractDataFrame, output::Symbol)::Tuple{Float64
 end
 
 """
-	function top_n_values(df, col, n)::Nothing
+	function top_n_values(df::DataFrame, col::Symbol, n::Int)::DataFrame
 
 Find top n values by occurence
 """
-function top_n_values(df::DataFrame, col, n)::DataFrame
+function top_n_values(df::DataFrame, col::Symbol, n::Int)::DataFrame
 	#name = @nameofvariable(df)
 	#println("Top $n values for $col in $name:")
 	#=
