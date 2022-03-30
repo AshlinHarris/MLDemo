@@ -20,7 +20,7 @@ end
 
 Add column to a DataFrame based on symbol presence in the target DataFrame 
 """
-function add_target_column!(df::DataFrame, symb, target_df::DataFrame)
+function add_target_column!(df::AbstractDataFrame, symb::Symbol, target_df::AbstractDataFrame)
 	insertcols!(df, symb => map(Bool, zeros(nrow(df))), makeunique = true)
 	list = target_df.PATIENT |> unique
 	for x in eachrow(df)
@@ -32,11 +32,11 @@ function add_target_column!(df::DataFrame, symb, target_df::DataFrame)
 end
 
 """
-	function get_data(file_name)::DataFrame
+	function get_data(file_name)::AbstractDataFrame
 
 Return the contents of a CSV file as a DataFrame
 """
-function get_data(file_name)::DataFrame
+function get_data(file_name)::AbstractDataFrame
 
 	conf = ConfParse("./config.ini")
 	parse_conf!(conf)
@@ -53,10 +53,10 @@ Return a DataFrame subset
 For check::DataFrame, including only PATIENTs present in check
 Otherwise, Subset DataFrame of PATIENTs with condition
 """
-function dataframe_subset(df::DataFrame, check::DataFrame)::DataFrame
+function dataframe_subset(df::AbstractDataFrame, check::AbstractDataFrame)::DataFrame
 	return filter(:DESCRIPTION => x -> x in check.PATIENT, df)
 end
-function dataframe_subset(df::DataFrame, check::Any)::DataFrame
+function dataframe_subset(df::AbstractDataFrame, check::Any)::AbstractDataFrame
 	return filter(:DESCRIPTION => x -> isequal(x, check), df)
 end
 
@@ -68,7 +68,7 @@ Unstack a DataFrame df by row and column keys x and y
 
 Isn't there a one-liner for this?
 """
-function boolean_unstack(df::DataFrame, x::Symbol, y::Symbol)::DataFrame
+function boolean_unstack(df::AbstractDataFrame, x::Symbol, y::Symbol)::AbstractDataFrame
 
 	#=
 	###OLD METHOD###
@@ -114,8 +114,7 @@ end
 
 Decision tree classifier on a DataFrame over a given output
 """
-function run_decision_tree(df::DataFrame, output)
-	output = :MISCARRIAGE
+function run_decision_tree(df::AbstractDataFrame, output)
 
 	y = df[:, output]
 	X = select(df, Not([:PATIENT, output]))
