@@ -124,7 +124,7 @@ function run_decision_tree(df::DataFrame, output)
 	RNG_VALUE = 2022
 	train, test = partition(eachindex(y), 0.8, shuffle = true, rng = RNG_VALUE)
 	#display(models(matching(X, y)))
-	println()
+	#println()
 
 	Tree = @load DecisionTreeClassifier pkg=DecisionTree verbosity=0
 	tree_model = Tree(max_depth = 3)
@@ -144,16 +144,15 @@ end
 
 Find top n values by occurence
 """
-function top_n_values(df::DataFrame, col, n)::Nothing
-	name = @nameofvariable(df)
-	println("Top $n values for $col in $name:")
+function top_n_values(df::DataFrame, col, n)::DataFrame
+	#name = @nameofvariable(df)
+	#println("Top $n values for $col in $name:")
 	#=
 	x = first(sort(countmap(df[:, col]; alg = :dict), byvalue = true, rev = true), n)
 	show(IOContext(stdout, :limit => false), "text/plain", x)
 	println()
 	=#
-	first(sort(combine(nrow, groupby(df, col)), "nrow", rev=true), n) |> println
-	return
+	return first(sort(combine(nrow, groupby(df, col)), "nrow", rev=true), n)
 end
 
 end

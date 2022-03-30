@@ -32,8 +32,8 @@ function main()
 
 	# Summarize DataFrames
 	
-	top_n_values(conditions_df, :DESCRIPTION, 12)
-	top_n_values(allergy_df, :DESCRIPTION, 12)
+	top_n_values(conditions_df, :DESCRIPTION, 12) |> println
+	top_n_values(allergy_df, :DESCRIPTION, 12) |> println
 
 #	describe(conditions_df) |> println
 
