@@ -27,7 +27,8 @@ function add_target_column!(df::AbstractDataFrame, symb::Symbol, target_df::Abst
 			x[symb] = true
 		end
 	end
-	#coerce!(df, symb => OrderedFactor{2}) # Why doesn't this work here?
+	coerce!(df, symb => OrderedFactor{2})
+
 	return
 end
 
@@ -60,7 +61,6 @@ function dataframe_subset(df::AbstractDataFrame, check::Any)::AbstractDataFrame
 	return filter(:DESCRIPTION => x -> isequal(x, check), df)
 end
 
-
 """
 	function boolean_unstack(df::AbstractDataFrame, x::Symbol, y::Symbol)::AbstractDataFrame
 
@@ -85,7 +85,6 @@ function run_decision_tree(df::AbstractDataFrame, output::Symbol)::Tuple{Float64
 	y = df[:, output]
 	X = select(df, Not([:PATIENT, output]))
 	
-	#TODO: make sure this is deterministic
 	RNG_VALUE = 2022
 	train, test = partition(eachindex(y), 0.8, shuffle = true, rng = RNG_VALUE)
 

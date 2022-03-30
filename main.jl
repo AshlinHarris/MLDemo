@@ -47,7 +47,6 @@ function main()
 	#composite_df = pivotView(allergy_df, :PATIENT, :DESCRIPTION)
 	#pivotView(allergy_df, :PATIENT, :DESCRIPTION) |> describe |> println
 	add_target_column!(composite_df, :MISCARRIAGE, miscarriage_only)
-	coerce!(composite_df, :MISCARRIAGE => OrderedFactor{2})
 #	describe(composite_df) |> display
 
 	# Machine learning
