@@ -20,7 +20,7 @@ end
 
 Add column to a DataFrame based on symbol presence in the target DataFrame 
 """
-function add_target_column!(df::AbstractDataFrame, symb::Symbol, target_df::AbstractDataFrame)
+function add_target_column!(df::AbstractDataFrame, symb::Symbol, target_df::AbstractDataFrame)::Nothing
 	insertcols!(df, symb => map(Bool, zeros(nrow(df))), makeunique = true)
 	list = target_df.PATIENT |> unique
 	for x in eachrow(df)
@@ -29,7 +29,9 @@ function add_target_column!(df::AbstractDataFrame, symb::Symbol, target_df::Abst
 		end
 	end
 	#coerce!(df, symb => OrderedFactor{2}) # Why doesn't this work here?
+	return
 end
+
 
 """
 	function get_data(file_name)::AbstractDataFrame
@@ -114,7 +116,7 @@ end
 
 Decision tree classifier on a DataFrame over a given output
 """
-function run_decision_tree(df::AbstractDataFrame, output)
+function run_decision_tree(df::AbstractDataFrame, output::Symbol)::Tuple{Float64, Float64}
 
 	y = df[:, output]
 	X = select(df, Not([:PATIENT, output]))

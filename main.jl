@@ -51,7 +51,7 @@ function main()
 #	describe(composite_df) |> display
 
 	# Machine learning
-	(acc, f1_score)= run_decision_tree(composite_df, :MISCARRAIGE)
+	(acc, f1_score)= run_decision_tree(composite_df, :MISCARRIAGE)
 	
 	# Results
 	println()
