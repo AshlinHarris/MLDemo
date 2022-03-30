@@ -14,13 +14,14 @@ macro nameofvariable(x)
 	return string(x)
 end
 
+
 """
 	function add_target_column!(df::AbstractDataFrame, symb::Symbol, target_df::AbstractDataFrame)::Nothing
 
 Add column to a DataFrame based on symbol presence in the target DataFrame 
 """
 function add_target_column!(df::AbstractDataFrame, symb::Symbol, target_df::AbstractDataFrame)::Nothing
-	insertcols!(df, symb => map(Bool, zeros(nrow(df))), makeunique = true)
+	insertcols!(df, symb => map(Bool, zeros(nrow(df))))
 	list = target_df.PATIENT |> unique
 	for x in eachrow(df)
 		if x[:PATIENT] in list
@@ -28,8 +29,7 @@ function add_target_column!(df::AbstractDataFrame, symb::Symbol, target_df::Abst
 		end
 	end
 	coerce!(df, symb => OrderedFactor{2})
-
-	return
+	return nothing
 end
 
 
@@ -76,16 +76,16 @@ function boolean_unstack(df::AbstractDataFrame, x::Symbol, y::Symbol)::AbstractD
 	return B
 end
 
+#TODO: What are the valid types for RNG_VALUE
 """
-	function run_decision_tree(df::AbstractDataFrame, output::Symbol)::Tuple{Float64, Float64}
+	function run_decision_tree(df::AbstractDataFrame, output::Symbol, RNG_VALUE)::Tuple{AbstractFloat, AbstractFloat}
 
 Decision tree classifier on a DataFrame over a given output
 """
-function run_decision_tree(df::AbstractDataFrame, output::Symbol)::Tuple{Float64, Float64}
+function run_decision_tree(df::AbstractDataFrame, output::Symbol, RNG_VALUE)::Tuple{AbstractFloat, AbstractFloat}
 	y = df[:, output]
 	X = select(df, Not([:PATIENT, output]))
 	
-	RNG_VALUE = 2022
 	train, test = partition(eachindex(y), 0.8, shuffle = true, rng = RNG_VALUE)
 
 	Tree = @load DecisionTreeClassifier pkg=DecisionTree verbosity=0

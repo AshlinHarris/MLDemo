@@ -16,8 +16,9 @@ using Revise
 #using Statistics
 #using Traceur
 
-includet("src/MLDemo.jl")
+include("src/MLDemo.jl")
 using .MLDemo
+
 
 """
 	function main()
@@ -43,7 +44,8 @@ function main()
 	add_target_column!(composite_df, :MISCARRIAGE, miscarriage_only)
 
 	# Machine learning
-	acc, f1_score= run_decision_tree(composite_df, :MISCARRIAGE)
+	RNG_VALUE = 2022
+	acc, f1_score= run_decision_tree(composite_df, :MISCARRIAGE, RNG_VALUE)
 	
 	# Results
 	println()
