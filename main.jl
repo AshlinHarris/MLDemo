@@ -31,11 +31,8 @@ function main()
 	allergy_df = get_data("allergies.csv")
 
 	# Summarize DataFrames
-	
 	top_n_values(conditions_df, :DESCRIPTION, 12) |> println
 	top_n_values(allergy_df, :DESCRIPTION, 12) |> println
-
-#	describe(conditions_df) |> println
 
 	# Filter DataFrames
 	miscarriage_only = dataframe_subset(conditions_df, "Miscarriage in first trimester")
@@ -43,14 +40,10 @@ function main()
 
 	# Generate composite DataFrame
 	composite_df = boolean_unstack(allergy_df, :PATIENT, :DESCRIPTION)
-	#composite_df |> describe |> println
-	#composite_df = pivotView(allergy_df, :PATIENT, :DESCRIPTION)
-	#pivotView(allergy_df, :PATIENT, :DESCRIPTION) |> describe |> println
 	add_target_column!(composite_df, :MISCARRIAGE, miscarriage_only)
-#	describe(composite_df) |> display
 
 	# Machine learning
-	(acc, f1_score)= run_decision_tree(composite_df, :MISCARRIAGE)
+	acc, f1_score= run_decision_tree(composite_df, :MISCARRIAGE)
 	
 	# Results
 	println()
