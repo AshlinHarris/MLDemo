@@ -152,7 +152,7 @@ function top_n_values(df::DataFrame, col, n)::Nothing
 	show(IOContext(stdout, :limit => false), "text/plain", x)
 	println()
 	=#
-	first(combine(nrow, groupby(df, col)), n) |> println
+	first(sort(combine(nrow, groupby(df, col)), "nrow", rev=true), n) |> println
 	return
 end
 
