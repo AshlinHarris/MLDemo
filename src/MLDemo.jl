@@ -21,7 +21,7 @@ end
 Add column to a DataFrame based on symbol presence in the target DataFrame 
 """
 function add_target_column!(df::AbstractDataFrame, symb::Symbol, target_df::AbstractDataFrame)::Nothing
-	insertcols!(df, symb => map(Bool, zeros(nrow(df))))
+	insertcols!(df, symb => zeros(T=Bool, nrow(df)))
 	list = target_df.PATIENT |> unique
 	for x in eachrow(df)
 		if x[:PATIENT] in list
