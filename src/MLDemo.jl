@@ -1,4 +1,3 @@
-__precompile__()
 module MLDemo
 export add_target_column!, get_data, dataframe_subset, boolean_unstack, run_decision_tree, top_n_values
 
