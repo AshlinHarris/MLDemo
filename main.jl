@@ -8,6 +8,7 @@ using DataFrames
 #using JuliaDB
 #using LinearAlgebra
 using MLJ
+using Printf
 #using Profile
 using Random
 using Revise
@@ -35,8 +36,10 @@ function main()
 	allergies_df = get_data("allergies.csv")
 
 	# Summarize DataFrames
-	top_n_values(conditions_df, :DESCRIPTION, 12) |> println
-	top_n_values(allergies_df, :DESCRIPTION, 12) |> println
+	println(top_n_values(conditions_df, :DESCRIPTION, 12))
+	println()
+	println(top_n_values(allergies_df, :DESCRIPTION, 12))
+	println()
 
 	# Filter DataFrames
 	miscarriage_only = dataframe_subset(conditions_df, "Miscarriage in first trimester")
@@ -52,8 +55,8 @@ function main()
 	
 	# Results
 	println()
-	println("Accuracy: ", round(acc, digits=4))
-	println("F1 Score: ", round(f1_score, digits=4))
+	@printf("Accuracy: %.3f\n", acc)
+	@printf("F1 Score: %.3f\n", f1_score)
 
 	return nothing
 end
