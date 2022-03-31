@@ -16,7 +16,7 @@ using Revise
 #using Statistics
 #using Traceur
 
-include("src/MLDemo.jl")
+includet("src/MLDemo.jl")
 using .MLDemo
 
 

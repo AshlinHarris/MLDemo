@@ -21,14 +21,14 @@ end
 Add column to a DataFrame based on symbol presence in the target DataFrame 
 """
 function add_target_column!(df::AbstractDataFrame, symb::Symbol, target_df::AbstractDataFrame)::Nothing
-	insertcols!(df, symb => Array{OrderedFactor{2}}(undef, nrow(df)))
+	insertcols!(df, symb => Array{Bool}(undef, nrow(df)))
 	list = target_df.PATIENT |> unique
 	for x in eachrow(df)
 		if x[:PATIENT] in list
 			x[symb] = true
 		end
 	end
-	#coerce!(df, symb => OrderedFactor{2})
+	coerce!(df, symb => OrderedFactor{2})
 	return nothing
 end
 
