@@ -23,9 +23,7 @@ function add_target_column!(df::AbstractDataFrame, symb::Symbol, target_df::Abst
 	insertcols!(df, symb => zeros(Bool, nrow(df)))
 	list = target_df.PATIENT |> unique
 	for x in eachrow(df)
-		if x[:PATIENT] in list
-			x[symb] = true
-		end
+		x[symb] = x[:PATIENT] in list
 	end
 	coerce!(df, symb => OrderedFactor{2})
 	return nothing
