@@ -20,19 +20,7 @@ end
 Add column to a DataFrame based on symbol presence in the target DataFrame 
 """
 function add_target_column!(df::AbstractDataFrame, symb::Symbol, target_df::AbstractDataFrame)::Nothing
-	### OLD VERSION ###
-#=
-	insertcols!(df, symb => zeros(Bool, nrow(df)))
-	list = target_df.PATIENT |> unique
-	for x in eachrow(df)
-		x[symb] = x[:PATIENT] in list
-	end
-=#
-	### NEW VERSION ###
-	# Can I be certain that the row ordering is the same?
 	insertcols!(df, symb => [x[:PATIENT] in target_df.PATIENT for x in eachrow(df)])
-	
-
 	coerce!(df, symb => OrderedFactor{2})
 	return nothing
 end
