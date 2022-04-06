@@ -70,11 +70,6 @@ function boolean_unstack(df::AbstractDataFrame, x::Symbol, y::Symbol)::AbstractD
 end
 
 
-function number_with(x::Symbol, y, df::AbstractDataFrame)::Int
-	return count(isequal.(df[!,x], y))
-end
-
-
 #TODO: What are the valid types for RNG_VALUE
 """
 	function run_decision_tree(df::AbstractDataFrame, output::Symbol, RNG_VALUE)::Tuple{AbstractFloat, AbstractFloat}
