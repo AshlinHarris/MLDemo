@@ -1,21 +1,10 @@
 #!/usr/bin/env julia
 
-#using BenchmarkTools
 using DataFrames
-#using Dates
-#using Distributed
-#using FilePathsBase
-#using JuliaDB
-#using LinearAlgebra
 using MLJ
 using Printf
-#using Profile
 using Random
 using Revise
-#using ScientificTypesBase
-#using SparseArrays
-#using Statistics
-#using Traceur
 
 includet("src/MLDemo.jl")
 using .MLDemo
