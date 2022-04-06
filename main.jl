@@ -23,6 +23,7 @@ function main()
 	# Read in DataFrames from files
 	conditions_df = get_data("conditions.csv")
 	allergies_df = get_data("allergies.csv")
+	demographics_df = get_data("patients.csv")
 
 	# Summarize DataFrames
 	println(top_n_values(conditions_df, :DESCRIPTION, 12))
@@ -46,9 +47,11 @@ function main()
 	@printf("    %26s: %7d (%6.2f%%)\n", "Selected entries", selected, 100 * (selected / total))
 	#@printf("%30s: %7d\n", "Total number of entries", nrow(miscarriage_only))
 
+	### ALLERGY STUDY ###
 
 	# Generate composite DataFrame
 	composite_df = boolean_unstack(allergies_df, :PATIENT, :DESCRIPTION)
+	display(composite_df)
 	add_target_column!(composite_df, :MISCARRIAGE, miscarriage_only)
 
 	# Machine learning
@@ -59,6 +62,14 @@ function main()
 	println()
 	@printf("Accuracy: %.3f\n", acc)
 	@printf("F1 Score: %.3f\n", f1_score)
+
+	### DEMOGRAPHICS ###
+	
+	# From the demographics DataFrame, take only PATIENTS with "Miscarriage in first trimester"
+	#TODO: dataframe_subset() should be generalized to handle this
+	miscarriage_demographics = filter(:Id => x -> x in miscarriage_only.PATIENT, demographics_df)
+	display(miscarriage_demographics)
+
 
 	return nothing
 end
