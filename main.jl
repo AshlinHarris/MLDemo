@@ -49,12 +49,14 @@ function main()
 
 	### ALLERGY STUDY ###
 
+	#=
 	# Generate composite DataFrame
 	composite_df = boolean_unstack(allergies_df, :PATIENT, :DESCRIPTION)
 	#display(composite_df)
 	add_target_column!(composite_df, :MISCARRIAGE, miscarriage_only)
 
 	# Machine learning
+	#TODO: Skip this if total==0
 	RNG_VALUE = abs(rand(Int))
 	acc, f1_score= run_decision_tree(composite_df, :MISCARRIAGE, RNG_VALUE)
 	
@@ -62,6 +64,7 @@ function main()
 	println()
 	@printf("Accuracy: %.3f\n", acc)
 	@printf("F1 Score: %.3f\n", f1_score)
+	=#
 
 	### DEMOGRAPHICS ###
 	
