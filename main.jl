@@ -51,7 +51,7 @@ function main()
 
 	# Generate composite DataFrame
 	composite_df = boolean_unstack(allergies_df, :PATIENT, :DESCRIPTION)
-	display(composite_df)
+	#display(composite_df)
 	add_target_column!(composite_df, :MISCARRIAGE, miscarriage_only)
 
 	# Machine learning
@@ -68,7 +68,7 @@ function main()
 	# From the demographics DataFrame, take only PATIENTS with "Miscarriage in first trimester"
 	#TODO: dataframe_subset() should be generalized to handle this
 	miscarriage_demographics = filter(:Id => x -> x in miscarriage_only.PATIENT, demographics_df)
-	display(miscarriage_demographics)
+	#display(miscarriage_demographics)
 
 
 	return nothing
