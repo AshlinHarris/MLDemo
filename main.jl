@@ -2,6 +2,7 @@
 
 using DataFrames
 using MLJ
+using Plots
 using Printf
 using Random
 using Revise
@@ -72,8 +73,37 @@ function main()
 	#TODO: dataframe_subset() should be generalized to handle this
 	miscarriage_demographics = filter(:Id => x -> x in miscarriage_only.PATIENT, demographics_df)
 	#display(miscarriage_demographics)
+	#display(names(miscarriage_demographics))
 
+	for category in [:MARITAL, :RACE, :ETHNICITY, :GENDER]
+		println(top_n_values(miscarriage_demographics, category, 12))
+		println(top_n_values(demographics_df, category, 12))
+		println()
+		println()
+		println()
+	end
 
+#=
+#missing values an issue?
+	df = top_n_values(demographics_df, :MARITAL, 12)
+	a1 = df.MARITAL, df.nrow
+	df = top_n_values(miscarriage_demographics, :MARITAL, 12)
+	a2 = df.MARITAL, df.nrow
+=#
+	df = top_n_values(demographics_df, :RACE, 12)
+	b1 = df.RACE, df.nrow
+	df = top_n_values(miscarriage_demographics, :RACE, 12)
+	b2 = df.RACE, df.nrow
+	df = top_n_values(demographics_df, :ETHNICITY, 12)
+	c1 = df.ETHNICITY, df.nrow
+	df = top_n_values(miscarriage_demographics, :ETHNICITY, 12)
+	c2 = df.ETHNICITY, df.nrow
+	df = top_n_values(demographics_df, :GENDER, 12)
+	d1 = df.GENDER, df.nrow
+	df = top_n_values(miscarriage_demographics, :GENDER, 12)
+	d2 = df.GENDER, df.nrow
+
+	display(pie([b1, b2, c1, c2, d1, d2], layout = (3,2)))
 	return nothing
 end
 
