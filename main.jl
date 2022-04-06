@@ -105,7 +105,9 @@ function main()
 	df = top_n_values(miscarriage_demographics, :GENDER, 12)
 	d2 = df.GENDER, df.nrow
 
-	display(pie([b1, b2, c1, c2, d1, d2], layout = (3,2)))
+	x = pie([b1, b2, c1, c2, d1, d2], layout = (3,2))
+	png(x, "demographics.png")
+
 	return nothing
 end
 
