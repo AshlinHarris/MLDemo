@@ -75,6 +75,7 @@ function main()
 	#display(miscarriage_demographics)
 	#display(names(miscarriage_demographics))
 
+#=
 	for category in [:MARITAL, :RACE, :ETHNICITY, :GENDER]
 		println(top_n_values(miscarriage_demographics, category, 12))
 		println(top_n_values(demographics_df, category, 12))
@@ -82,6 +83,7 @@ function main()
 		println()
 		println()
 	end
+=#
 
 #=
 #missing values an issue?
