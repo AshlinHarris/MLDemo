@@ -1,5 +1,5 @@
 module MLDemo
-export add_target_column!, get_data, dataframe_subset, boolean_unstack, run_decision_tree, top_n_values
+export add_target_column!, get_data, dataframe_subset, boolean_unstack, number_with, run_decision_tree, top_n_values
 
 using ConfParser # Parse, modify, write to configuration files
 using DataFrames
@@ -68,6 +68,12 @@ function boolean_unstack(df::AbstractDataFrame, x::Symbol, y::Symbol)::AbstractD
 	end
 	return B
 end
+
+
+function number_with(x::Symbol, y, df::AbstractDataFrame)::Int
+	return count(isequal.(df[!,x], y))
+end
+
 
 #TODO: What are the valid types for RNG_VALUE
 """

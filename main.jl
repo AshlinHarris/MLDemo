@@ -24,6 +24,21 @@ function main()
 	conditions_df = get_data("conditions.csv")
 	allergies_df = get_data("allergies.csv")
 
+	# Study feasibility
+	topic = "Miscarriage in first trimester"
+	selected = number_with(:DESCRIPTION, topic, conditions_df)
+	total = nrow(conditions_df)
+
+#=
+	title_format = "%30s: %7d"
+	header_format = "%30s: %7d"
+	line_format = "    %26s: %7d (%6.3f)"
+=#
+
+	@printf("%s: %s\n", "Study feasibility", topic)
+	@printf("%30s: %7d\n", "Total number of entries", total)
+	@printf("    %26s: %7d (%6.2f%%)\n", "Selected entries", selected, 100 * (selected / total))
+
 	# Summarize DataFrames
 	println(top_n_values(conditions_df, :DESCRIPTION, 12))
 	println()
@@ -31,7 +46,8 @@ function main()
 	println()
 
 	# Filter DataFrames
-	miscarriage_only = dataframe_subset(conditions_df, "Miscarriage in first trimester")
+	miscarriage_only = dataframe_subset(conditions_df, topic)
+	#@printf("%30s: %7d\n", "Total number of entries", nrow(miscarriage_only))
 	with_allergies = dataframe_subset(allergies_df, miscarriage_only)
 
 	# Generate composite DataFrame
