@@ -43,10 +43,13 @@ function main()
 	selected = nrow(miscarriage_only)
 	total = nrow(conditions_df)
 
+	println()
 	@printf("%s: %s\n", "Study feasibility", topic)
 	@printf("%30s: %7d\n", "Total number of entries", total)
 	@printf("    %26s: %7d (%6.2f%%)\n", "Selected entries", selected, 100 * (selected / total))
 	#@printf("%30s: %7d\n", "Total number of entries", nrow(miscarriage_only))
+	println()
+	println()
 
 	### ALLERGY STUDY ###
 
@@ -75,15 +78,17 @@ function main()
 	#display(miscarriage_demographics)
 	#display(names(miscarriage_demographics))
 
-#=
+	println()
+	println("Comparison of Demographic information")
+	println()
 	for category in [:MARITAL, :RACE, :ETHNICITY, :GENDER]
-		println(top_n_values(miscarriage_demographics, category, 12))
-		println(top_n_values(demographics_df, category, 12))
-		println()
-		println()
-		println()
+		a = top_n_values(miscarriage_demographics, category, 12)
+		rename!(a, Dict(:nrow => :Miscarriage))
+		b = top_n_values(demographics_df, category, 12)
+		rename!(b, Dict(:nrow => :All))
+		println(outerjoin(a, b, on=category, matchmissing=:equal))
+	println()
 	end
-=#
 
 #=
 #missing values an issue?

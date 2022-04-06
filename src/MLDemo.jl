@@ -20,6 +20,7 @@ end
 Add column to a DataFrame based on symbol presence in the target DataFrame 
 """
 function add_target_column!(df::AbstractDataFrame, symb::Symbol, target_df::AbstractDataFrame)::Nothing
+	#TODO: is it certain the the order of eachrow will match the order of checks?
 	insertcols!(df, symb => [x[:PATIENT] in target_df.PATIENT for x in eachrow(df)])
 	coerce!(df, symb => OrderedFactor{2})
 	return nothing
