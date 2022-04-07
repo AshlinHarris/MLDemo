@@ -39,10 +39,14 @@ function main()
 	println()
 
 	# Summarize DataFrames
+#=
 	for df in [conditions_df, topic_2_df]
-		println(top_n_values(df, :DESCRIPTION, 12))
+		x = top_n_values(df, :DESCRIPTION, 12)
+		println(x)
+		display(x[!,:DESCRIPTION])
 		println()
 	end
+=#
 
 	# Generate composite DataFrame
 	composite_df = boolean_unstack(topic_2_df, :PATIENT, :DESCRIPTION)
