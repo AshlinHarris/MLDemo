@@ -100,17 +100,14 @@ function main()
 	=#
 
 	plots=[]
-
 	for df in [demographics_df, miscarriage_demographics]
 		for factor in [:RACE, :ETHNICITY, :GENDER]
 			x = top_n_values(df, factor, 12)
-			y = x[!,factor], x.nrow
+			y = pie(x[!,factor], x.nrow)
 			push!(plots, y)
 		end
 	end
-
-	fig1 = pie([_ for _ in plots], layout = (3,2))
-	#fig1 = pie([plots[1],plots[2]], layout = (3,2))
+	fig1 = plot(plots..., layout = (3,2))
 	png(fig1, "demographics.png")
 
 	return nothing
