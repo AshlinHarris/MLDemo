@@ -79,33 +79,26 @@ function main()
 	#display(miscarriage_demographics)
 	#display(names(miscarriage_demographics))
 
+	FACTORS = [:RACE, :ETHNICITY, :GENDER]
+	DATAFRAMES = [demographics_df, miscarriage_demographics]
+
 	println()
 	println("Comparison of Demographic information")
 	println()
-	for category in [:MARITAL, :RACE, :ETHNICITY, :GENDER]
-		a = top_n_values(miscarriage_demographics, category, 12)
+	for factor in FACTORS
+		a = top_n_values(miscarriage_demographics, factor, 12)
 		rename!(a, Dict(:nrow => :Miscarriage))
-		b = top_n_values(demographics_df, category, 12)
+		b = top_n_values(demographics_df, factor, 12)
 		rename!(b, Dict(:nrow => :All))
-		println(outerjoin(a, b, on=category, matchmissing=:equal))
+		println(outerjoin(a, b, on=factor, matchmissing=:equal))
 	println()
 	end
 
-	#=
-	#missing values an issue?
-		df = top_n_values(demographics_df, :MARITAL, 12)
-		a1 = df.MARITAL, df.nrow
-		df = top_n_values(miscarriage_demographics, :MARITAL, 12)
-		a2 = df.MARITAL, df.nrow
-	=#
-
 	plots=[]
-	FACTORS = [:RACE, :ETHNICITY, :GENDER]
-	DATAFRAMES = [demographics_df, miscarriage_demographics]
 	for factor in FACTORS
 		for df in DATAFRAMES
 			x = top_n_values(df, factor, 12)
-			y = pie(x[!,factor], x.nrow)
+			y = pie(x[!,factor], x.nrow) # Cannot handle missing values
 			push!(plots, y)
 		end
 	end
