@@ -42,7 +42,8 @@ function main()
 
 		### ALLERGY STUDY ###
 
-		println("="^40)
+		SCREEN_WIDTH = 60
+		println("="^SCREEN_WIDTH)
 		println("Example study: Allergy associations")
 
 		topic_2_df = get_data("allergies.csv")
@@ -80,8 +81,7 @@ function main()
 		#display(topic_1_demographics)
 		#display(names(topic_1_demographics))
 
-		println()
-		println("Comparison of Demographic information")
+		println("Comparison of Demographic information:")
 		plots=[]
 		FACTORS = [:RACE, :ETHNICITY, :GENDER]
 		DATAFRAMES = [demographics_df, topic_1_demographics]
@@ -94,9 +94,8 @@ function main()
 			a = top_n_values(topic_1_demographics, factor, 12)
 			rename!(a, Dict(:nrow => :Subset))
 			b = top_n_values(demographics_df, factor, 12)
-			rename!(b, Dict(:nrow => :All))
+			rename!(b, Dict(:nrow => :Total))
 			println(outerjoin(a, b, on=factor, matchmissing=:equal))
-			println()
 		end
 		fig1 = plot(plots..., layout = (length(FACTORS), length(DATAFRAMES)), plot_title="$topic_1")
 		png(fig1, "demographics_$i.png")
