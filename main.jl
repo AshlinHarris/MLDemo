@@ -73,7 +73,6 @@ function main()
 	println()
 	println()
 
-	
 	# From the demographics DataFrame, take only PATIENTS with "Miscarriage in first trimester"
 	#TODO: dataframe_subset() should be generalized to handle this
 	miscarriage_demographics = filter(:Id => x -> x in miscarriage_only.PATIENT, demographics_df)
@@ -92,28 +91,27 @@ function main()
 	println()
 	end
 
-#=
-#missing values an issue?
-	df = top_n_values(demographics_df, :MARITAL, 12)
-	a1 = df.MARITAL, df.nrow
-	df = top_n_values(miscarriage_demographics, :MARITAL, 12)
-	a2 = df.MARITAL, df.nrow
-=#
-	df = top_n_values(demographics_df, :RACE, 12)
-	b1 = df.RACE, df.nrow
-	df = top_n_values(miscarriage_demographics, :RACE, 12)
-	b2 = df.RACE, df.nrow
-	df = top_n_values(demographics_df, :ETHNICITY, 12)
-	c1 = df.ETHNICITY, df.nrow
-	df = top_n_values(miscarriage_demographics, :ETHNICITY, 12)
-	c2 = df.ETHNICITY, df.nrow
-	df = top_n_values(demographics_df, :GENDER, 12)
-	d1 = df.GENDER, df.nrow
-	df = top_n_values(miscarriage_demographics, :GENDER, 12)
-	d2 = df.GENDER, df.nrow
+	#=
+	#missing values an issue?
+		df = top_n_values(demographics_df, :MARITAL, 12)
+		a1 = df.MARITAL, df.nrow
+		df = top_n_values(miscarriage_demographics, :MARITAL, 12)
+		a2 = df.MARITAL, df.nrow
+	=#
 
-	x = pie([b1, b2, c1, c2, d1, d2], layout = (3,2))
-	png(x, "demographics.png")
+	plots=[]
+
+	for df in [demographics_df, miscarriage_demographics]
+		for factor in [:RACE, :ETHNICITY, :GENDER]
+			x = top_n_values(df, factor, 12)
+			y = x[!,factor], x.nrow
+			push!(plots, y)
+		end
+	end
+
+	fig1 = pie([_ for _ in plots], layout = (3,2))
+	#fig1 = pie([plots[1],plots[2]], layout = (3,2))
+	png(fig1, "demographics.png")
 
 	return nothing
 end
