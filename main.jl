@@ -26,12 +26,6 @@ function main()
 	allergies_df = get_data("allergies.csv")
 	demographics_df = get_data("patients.csv")
 
-	# Summarize DataFrames
-	println(top_n_values(conditions_df, :DESCRIPTION, 12))
-	println()
-	println(top_n_values(allergies_df, :DESCRIPTION, 12))
-	println()
-
 	# Filter DataFrames
 	topic = "Miscarriage in first trimester"
 	miscarriage_only = dataframe_subset(conditions_df, topic)
@@ -43,20 +37,26 @@ function main()
 	println("Example study: Allergy associations")
 	println()
 
+	# Summarize DataFrames
+	for df in [conditions_df, allergies_df]
+		println(top_n_values(df, :DESCRIPTION, 12))
+		println()
+	end
+
 	# Generate composite DataFrame
 	composite_df = boolean_unstack(allergies_df, :PATIENT, :DESCRIPTION)
-	#display(composite_df)
 	add_target_column!(composite_df, :MISCARRIAGE, miscarriage_only)
 
-	# Machine learning
-	#TODO: Skip this if total==0
-	RNG_VALUE = abs(rand(Int))
-	acc, f1_score= run_decision_tree(composite_df, :MISCARRIAGE, RNG_VALUE)
-	
-	# Results
-	println()
-	@printf("Accuracy: %.3f\n", acc)
-	@printf("F1 Score: %.3f\n", f1_score)
+	if nrow(with_allergies) != 0
+		# Machine learning
+		RNG_VALUE = abs(rand(Int))
+		acc, f1_score= run_decision_tree(composite_df, :MISCARRIAGE, RNG_VALUE)
+		
+		# Results
+		println()
+		@printf("Accuracy: %.3f\n", acc)
+		@printf("F1 Score: %.3f\n", f1_score)
+	end
 
 	### DEMOGRAPHICS ###
 
