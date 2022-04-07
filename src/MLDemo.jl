@@ -1,5 +1,4 @@
 module MLDemo
-export nameofvariable
 export add_target_column!, get_data, dataframe_subset, boolean_unstack, number_with, run_decision_tree, top_n_values
 
 using ConfParser # Parse, modify, write to configuration files
@@ -9,11 +8,6 @@ using MLJDecisionTreeInterface
 
 using CSV: File
 using StatsBase: countmap
-
-macro nameofvariable(x)
-	return string(x)
-end
-
 
 """
 	function add_target_column!(df::AbstractDataFrame, symb::Symbol, target_df::AbstractDataFrame)::Nothing
