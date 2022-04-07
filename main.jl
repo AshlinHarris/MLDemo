@@ -79,28 +79,24 @@ function main()
 	#display(miscarriage_demographics)
 	#display(names(miscarriage_demographics))
 
-	FACTORS = [:RACE, :ETHNICITY, :GENDER]
-	DATAFRAMES = [demographics_df, miscarriage_demographics]
-
 	println()
 	println("Comparison of Demographic information")
 	println()
-	for factor in FACTORS
-		a = top_n_values(miscarriage_demographics, factor, 12)
-		rename!(a, Dict(:nrow => :Miscarriage))
-		b = top_n_values(demographics_df, factor, 12)
-		rename!(b, Dict(:nrow => :All))
-		println(outerjoin(a, b, on=factor, matchmissing=:equal))
-	println()
-	end
-
 	plots=[]
+	FACTORS = [:RACE, :ETHNICITY, :GENDER]
+	DATAFRAMES = [demographics_df, miscarriage_demographics]
 	for factor in FACTORS
 		for df in DATAFRAMES
 			x = top_n_values(df, factor, 12)
 			y = pie(x[!,factor], x.nrow) # Cannot handle missing values
 			push!(plots, y)
 		end
+		a = top_n_values(miscarriage_demographics, factor, 12)
+		rename!(a, Dict(:nrow => :Miscarriage))
+		b = top_n_values(demographics_df, factor, 12)
+		rename!(b, Dict(:nrow => :All))
+		println(outerjoin(a, b, on=factor, matchmissing=:equal))
+		println()
 	end
 	fig1 = plot(plots..., layout = (length(FACTORS), length(DATAFRAMES)), plot_title="Demographics: All vs Patients with Condition")
 	png(fig1, "demographics.png")
