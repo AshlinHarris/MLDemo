@@ -40,7 +40,7 @@ function main()
 	### ALLERGY STUDY ###
 
 	println()
-	println("Example study: allergy associations")
+	println("Example study: Allergy associations")
 	println()
 
 	# Generate composite DataFrame
@@ -100,14 +100,14 @@ function main()
 	=#
 
 	plots=[]
-	for df in [demographics_df, miscarriage_demographics]
-		for factor in [:RACE, :ETHNICITY, :GENDER]
+	for factor in [:RACE, :ETHNICITY, :GENDER]
+		for df in [demographics_df, miscarriage_demographics]
 			x = top_n_values(df, factor, 12)
 			y = pie(x[!,factor], x.nrow)
 			push!(plots, y)
 		end
 	end
-	fig1 = plot(plots..., layout = (3,2))
+	fig1 = plot(plots..., layout = (3,2), plot_title="Demographics: All vs Patients with Condition")
 	png(fig1, "demographics.png")
 
 	return nothing
