@@ -30,7 +30,7 @@ function main()
 	demographics_df = get_data("patients.csv")
 
 	# Generate topics
-	TOPICS = top_n_values(conditions_df, :DESCRIPTION, 2)[!,:DESCRIPTION]
+	TOPICS = top_n_values(conditions_df, :DESCRIPTION, 4)[!,:DESCRIPTION]
 	push!(TOPICS, "Miscarriage in first trimester")
 
 	# Filter DataFrames
@@ -74,7 +74,7 @@ function main()
 		@printf("    %26s: %7d (%6.2f%%)\n", "Selected entries", selected, 100 * (selected / total))
 		#@printf("%30s: %7d\n", "Total number of entries", nrow(topic_1_only))
 
-		# From the demographics DataFrame, take only PATIENTS with "Miscarriage in first trimester"
+		# From the demographics DataFrame, take only PATIENTS with the primary topic condition
 		#TODO: dataframe_subset() should be generalized to handle this
 		topic_1_demographics = filter(:Id => x -> x in topic_1_only.PATIENT, demographics_df)
 		#display(topic_1_demographics)
@@ -92,7 +92,7 @@ function main()
 				push!(plots, y)
 			end
 			a = top_n_values(topic_1_demographics, factor, 12)
-			rename!(a, Dict(:nrow => :Miscarriage))
+			rename!(a, Dict(:nrow => :Subset))
 			b = top_n_values(demographics_df, factor, 12)
 			rename!(b, Dict(:nrow => :All))
 			println(outerjoin(a, b, on=factor, matchmissing=:equal))
