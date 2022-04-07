@@ -100,14 +100,16 @@ function main()
 	=#
 
 	plots=[]
-	for factor in [:RACE, :ETHNICITY, :GENDER]
-		for df in [demographics_df, miscarriage_demographics]
+	FACTORS = [:RACE, :ETHNICITY, :GENDER]
+	DATAFRAMES = [demographics_df, miscarriage_demographics]
+	for factor in FACTORS
+		for df in DATAFRAMES
 			x = top_n_values(df, factor, 12)
 			y = pie(x[!,factor], x.nrow)
 			push!(plots, y)
 		end
 	end
-	fig1 = plot(plots..., layout = (3,2), plot_title="Demographics: All vs Patients with Condition")
+	fig1 = plot(plots..., layout = (length(FACTORS), length(DATAFRAMES)), plot_title="Demographics: All vs Patients with Condition")
 	png(fig1, "demographics.png")
 
 	return nothing
