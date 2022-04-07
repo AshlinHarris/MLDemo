@@ -66,7 +66,6 @@ function main()
 		### DEMOGRAPHICS ###
 
 		# Study feasibility
-		#selected = number_with(:DESCRIPTION, topic_1, conditions_df)
 		selected = nrow(topic_1_only)
 		total = nrow(conditions_df)
 
