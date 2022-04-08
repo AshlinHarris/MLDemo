@@ -121,8 +121,6 @@ function main()
 
 		ctg = repeat(df[!,factor], outer = ncol(df)-1)
 		nam = repeat(names(df[:, Not(factor)]), inner = nrow(df))
-		display(ctg)
-		display(nam)
 		display(Matrix(df[:,Not(factor)]))
 
 		fig = groupedbar(nam, Matrix(df[:, Not(factor)]), group = ctg, xlabel = "Groups", ylabel = "Individuals",
