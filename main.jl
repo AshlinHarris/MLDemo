@@ -115,22 +115,22 @@ function main()
 
 	end
 
-i=1
+	i=1
 	for factor in FACTORS
 		df = DEMOGRAPHICS[factor]
 
-ctg = repeat(df[!,factor], outer = ncol(df)-1)
-nam = repeat(names(df[:, Not(factor)]), inner = nrow(df))
-display(ctg)
-display(nam)
-display(Matrix(df[:,Not(factor)]))
+		ctg = repeat(df[!,factor], outer = ncol(df)-1)
+		nam = repeat(names(df[:, Not(factor)]), inner = nrow(df))
+		display(ctg)
+		display(nam)
+		display(Matrix(df[:,Not(factor)]))
 
-fig2 = groupedbar(nam, Matrix(df[:, Not(factor)]), group = ctg, xlabel = "Groups", ylabel = "Individuals",
-        title = "$factor", bar_width = 0.67,
-        lw = 0, framestyle = :box)
+		fig = groupedbar(nam, Matrix(df[:, Not(factor)]), group = ctg, xlabel = "Groups", ylabel = "Individuals",
+			title = "$factor", bar_width = 0.67,
+			lw = 0, framestyle = :box)
 
-savefig(fig2, "bars_$i")
-i=i+1
+		savefig(fig, "bars_$i")
+		i=i+1
 	end
 
 
