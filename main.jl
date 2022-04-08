@@ -158,11 +158,11 @@ Top 20
 		nam = repeat(names(df[:, Not(factor)]), inner = nrow(df))
 
 		fig = groupedbar(nam, Matrix(df[:, Not(factor)]), group = ctg)
-		#plot!(fillcolor = MY_COLOR_PALETTE) # TODO: get this working
 		plot!(xlabel = "Groups", ylabel = "Individuals")
 		plot!(fig, title = "$factor")
 		plot!(fig, bar_width = 0.67, lw = 0, framestyle = :box)
 		plot!(legend=:topleft)
+		plot!(fillcolor = MY_COLOR_PALETTE) # TODO: get this working
 
 		savefig(fig, "bars_$i")
 		i=i+1
