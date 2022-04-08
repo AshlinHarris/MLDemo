@@ -162,6 +162,7 @@ Top 20
 		plot!(xlabel = "Groups", ylabel = "Individuals")
 		plot!(fig, title = "$factor")
 		plot!(fig, bar_width = 0.67, lw = 0, framestyle = :box)
+		plot!(legend=:topleft)
 
 		savefig(fig, "bars_$i")
 		i=i+1
