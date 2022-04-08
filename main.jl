@@ -56,8 +56,8 @@ function main()
 
 		### ALLERGY STUDY ###
 
-		SCREEN_WIDTH = 60
-		println("="^SCREEN_WIDTH)
+		#SCREEN_WIDTH = 60
+		#println("="^SCREEN_WIDTH)
 		#println("Example study: Allergy associations")
 
 		topic_2_df = get_data("allergies.csv")
@@ -120,9 +120,11 @@ function main()
 	i=1
 	for factor in FACTORS
 		df = DEMOGRAPHICS[factor]
+		println(df)
 
 		ctg = repeat(df[!,factor], outer = ncol(df)-1)
 		nam = repeat(names(df[:, Not(factor)]), inner = nrow(df))
+
 		fig = groupedbar(nam, Matrix(df[:, Not(factor)]), group = ctg)
 		#plot!(fillcolor = MY_COLOR_PALETTE) # TODO: get this working
 		plot!(xlabel = "Groups", ylabel = "Individuals")
@@ -132,12 +134,7 @@ function main()
 		savefig(fig, "bars_$i")
 		i=i+1
 	end
-
-
 	return nothing
-
-
-
 end
 
 main()
