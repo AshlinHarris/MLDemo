@@ -7,6 +7,7 @@ using Plots
 using Printf
 using Random
 using Revise
+using StatsPlots
 
 includet("src/MLDemo.jl")
 using .MLDemo
@@ -32,12 +33,20 @@ function main()
 
 	# Generate topics
 	TOPICS=[]
-	#TOPICS = top_n_values(conditions_df, :DESCRIPTION, 2)[!,:DESCRIPTION]
+	TOPICS = top_n_values(conditions_df, :DESCRIPTION, 2)[!,:DESCRIPTION]
 	#push!(TOPICS, "Miscarriage in first trimester")
 	push!(TOPICS, "Anemia (disorder)")
 
-	# Filter DataFrames
+	# Demographic DataFrames
+	DEMOGRAPHICS = Dict()
+	FACTORS = [:RACE, :ETHNICITY, :GENDER]
+	for factor in FACTORS
+		df = top_n_values(demographics_df, factor, 12)
+		rename!(df, Dict(:nrow => :Total))
+		push!(DEMOGRAPHICS, factor => df)
+	end
 
+	# Filter DataFrames
 	for i in 1:length(TOPICS)
 		topic_1 = TOPICS[i]
 
@@ -47,7 +56,7 @@ function main()
 
 		SCREEN_WIDTH = 60
 		println("="^SCREEN_WIDTH)
-		println("Example study: Allergy associations")
+		#println("Example study: Allergy associations")
 
 		topic_2_df = get_data("allergies.csv")
 		with_topic_2 = dataframe_subset(topic_2_df, topic_1_only)
@@ -83,31 +92,52 @@ function main()
 		#display(topic_1_demographics)
 		#display(names(topic_1_demographics))
 
-		println("Comparison of Demographic information:")
+		#println("Comparison of Demographic information:")
 		plots=[]
-		FACTORS = [:RACE, :ETHNICITY, :GENDER]
 		DATAFRAMES = [demographics_df, topic_1_demographics]
 		for factor in FACTORS
 			for df in DATAFRAMES
 				x = top_n_values(df, factor, 12)
-				y = pie(x[!,factor], x.nrow, palette = color_palette(:Paired_8)) # Cannot handle missing values
+				y = pie(x[!,factor], x.nrow, color_palette = palette(:Paired_8)) # Cannot handle missing values
 				plot!(fontfamily="Computer Modern")
 				plot!(label="f")
 				push!(plots, y)
 			end
-			a = top_n_values(topic_1_demographics, factor, 12)
-			rename!(a, Dict(:nrow => :Subset))
-			b = top_n_values(demographics_df, factor, 12)
-			rename!(b, Dict(:nrow => :Total))
-			println(outerjoin(a, b, on=factor, matchmissing=:equal))
+		a = top_n_values(topic_1_demographics, factor, 12)
+		rename!(a, Dict(:nrow => topic_1))
+
+		DEMOGRAPHICS[factor] = outerjoin(DEMOGRAPHICS[factor], a, on=factor, matchmissing=:equal)
+
 		end
-		fig1 = plot(plots..., layout = (length(FACTORS), length(DATAFRAMES)))
-		plot!(plot_title="$topic_1")
-		savefig(fig1, "demographics_$i.png")
+	fig1 = plot(plots..., layout = (length(FACTORS), length(DATAFRAMES)))
+	plot!(plot_title="$topic_1")
+	savefig(fig1, "demographics_$i.png")
 
 	end
 
+i=1
+	for factor in FACTORS
+		df = DEMOGRAPHICS[factor]
+
+ctg = repeat(df[!,factor], outer = ncol(df)-1)
+nam = repeat(names(df[:, Not(factor)]), inner = nrow(df))
+display(ctg)
+display(nam)
+display(Matrix(df[:,Not(factor)]))
+
+fig2 = groupedbar(nam, Matrix(df[:, Not(factor)]), group = ctg, xlabel = "Groups", ylabel = "Individuals",
+        title = "$factor", bar_width = 0.67,
+        lw = 0, framestyle = :box)
+
+savefig(fig2, "bars_$i")
+i=i+1
+	end
+
+
 	return nothing
+
+
+
 end
 
 main()
