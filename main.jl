@@ -30,7 +30,7 @@ function main()
 	demographics_df = get_data("patients.csv")
 
 	# Generate topics
-	TOPICS = top_n_values(conditions_df, :DESCRIPTION, 4)[!,:DESCRIPTION]
+	TOPICS = top_n_values(conditions_df, :DESCRIPTION, 12)[!,:DESCRIPTION]
 	push!(TOPICS, "Miscarriage in first trimester")
 
 	# Filter DataFrames
@@ -96,8 +96,9 @@ function main()
 			rename!(b, Dict(:nrow => :Total))
 			println(outerjoin(a, b, on=factor, matchmissing=:equal))
 		end
-		fig1 = plot(plots..., layout = (length(FACTORS), length(DATAFRAMES)), plot_title="$topic_1")
-		png(fig1, "demographics_$i.png")
+		fig1 = plot(plots..., layout = (length(FACTORS), length(DATAFRAMES)))
+		plot!(plot_title="$topic_1")
+		savefig(fig1, "demographics_$i.png")
 
 	end
 
