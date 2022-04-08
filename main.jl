@@ -31,11 +31,43 @@ function main()
 	conditions_df = get_data("conditions.csv")
 	demographics_df = get_data("patients.csv")
 
+	#top_n_values(conditions_df, :DESCRIPTION, 20)[!,:DESCRIPTION] |> display
+
 	# Generate topics
 	TOPICS=[]
-	TOPICS = top_n_values(conditions_df, :DESCRIPTION, 2)[!,:DESCRIPTION]
+	#TOPICS = top_n_values(conditions_df, :DESCRIPTION, 1)[!,:DESCRIPTION]
 	#push!(TOPICS, "Miscarriage in first trimester")
+	#push!(TOPICS, "Diabetic retinopathy associated with type II diabetes mellitus (disorder)")
+	#push!(TOPICS, "Body mass index 30+ - obesity (finding)")
 	push!(TOPICS, "Anemia (disorder)")
+	push!(TOPICS, "Hypertension")
+	push!(TOPICS, "Prediabetes")
+
+#=
+Top 20
+ "Suspected COVID-19"
+ "COVID-19"
+ "Fever (finding)"
+ "Cough (finding)"
+ "Body mass index 30+ - obesity (finding)"
+ "Loss of taste (finding)"
+ "Prediabetes"
+ "Anemia (disorder)"
+ "Fatigue (finding)"
+ "Hypertension"
+ "Sputum finding (finding)"
+ "Chronic sinusitis (disorder)"
+ "Miscarriage in first trimester"
+ "Pneumonia (disorder)"
+ "Hypoxemia (disorder)"
+ "Respiratory distress (finding)"
+ "Dyspnea (finding)"
+ "Wheezing (finding)"
+ "Viral sinusitis (disorder)"
+ "Hyperlipidemia"
+=#
+
+	TOPICS |> display
 
 	# Demographic DataFrames
 	DEMOGRAPHICS = Dict()
