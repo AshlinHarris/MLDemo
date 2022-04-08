@@ -1,5 +1,6 @@
 #!/usr/bin/env julia
 
+using ColorSchemes
 using DataFrames
 using MLJ
 using Plots
@@ -30,8 +31,10 @@ function main()
 	demographics_df = get_data("patients.csv")
 
 	# Generate topics
-	TOPICS = top_n_values(conditions_df, :DESCRIPTION, 12)[!,:DESCRIPTION]
-	push!(TOPICS, "Miscarriage in first trimester")
+	TOPICS=[]
+	#TOPICS = top_n_values(conditions_df, :DESCRIPTION, 2)[!,:DESCRIPTION]
+	#push!(TOPICS, "Miscarriage in first trimester")
+	push!(TOPICS, "Anemia (disorder)")
 
 	# Filter DataFrames
 
@@ -87,7 +90,9 @@ function main()
 		for factor in FACTORS
 			for df in DATAFRAMES
 				x = top_n_values(df, factor, 12)
-				y = pie(x[!,factor], x.nrow) # Cannot handle missing values
+				y = pie(x[!,factor], x.nrow, palette = color_palette(:Paired_8)) # Cannot handle missing values
+				plot!(fontfamily="Computer Modern")
+				plot!(label="f")
 				push!(plots, y)
 			end
 			a = top_n_values(topic_1_demographics, factor, 12)
