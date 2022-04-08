@@ -123,9 +123,10 @@ function main()
 		nam = repeat(names(df[:, Not(factor)]), inner = nrow(df))
 		display(Matrix(df[:,Not(factor)]))
 
-		fig = groupedbar(nam, Matrix(df[:, Not(factor)]), group = ctg, xlabel = "Groups", ylabel = "Individuals",
-			title = "$factor", bar_width = 0.67,
-			lw = 0, framestyle = :box)
+		fig = groupedbar(nam, Matrix(df[:, Not(factor)]), group = ctg)
+		plot!(xlabel = "Groups", ylabel = "Individuals")
+		plot!(fig, title = "$factor")
+		plot!(fig, bar_width = 0.67, lw = 0, framestyle = :box)
 
 		savefig(fig, "bars_$i")
 		i=i+1
