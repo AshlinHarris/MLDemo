@@ -46,6 +46,8 @@ function main()
 		push!(DEMOGRAPHICS, factor => df)
 	end
 
+	MY_COLOR_PALETTE = palette(:Paired_8)
+
 	# Filter DataFrames
 	for i in 1:length(TOPICS)
 		topic_1 = TOPICS[i]
@@ -98,7 +100,7 @@ function main()
 		for factor in FACTORS
 			for df in DATAFRAMES
 				x = top_n_values(df, factor, 12)
-				y = pie(x[!,factor], x.nrow, color_palette = palette(:Paired_8)) # Cannot handle missing values
+				y = pie(x[!,factor], x.nrow, color_palette = MY_COLOR_PALETTE) # Cannot handle missing values
 				plot!(fontfamily="Computer Modern")
 				plot!(label="f")
 				push!(plots, y)
@@ -121,9 +123,8 @@ function main()
 
 		ctg = repeat(df[!,factor], outer = ncol(df)-1)
 		nam = repeat(names(df[:, Not(factor)]), inner = nrow(df))
-		display(Matrix(df[:,Not(factor)]))
-
 		fig = groupedbar(nam, Matrix(df[:, Not(factor)]), group = ctg)
+		#plot!(fillcolor = MY_COLOR_PALETTE) # TODO: get this working
 		plot!(xlabel = "Groups", ylabel = "Individuals")
 		plot!(fig, title = "$factor")
 		plot!(fig, bar_width = 0.67, lw = 0, framestyle = :box)
