@@ -125,11 +125,10 @@ i=1
 	for i in 1:length(FACTORS)
 		factor = FACTORS[i]
 		df = coalesce.(DEMOGRAPHICS[factor],0)
+		println(df)
 
 		ctg = repeat(df[!,factor], outer = ncol(df)-1)
 		nam = repeat(names(df[:, Not(factor)]), inner = nrow(df))
-		ctg |> display
-		nam |> display
 
 		fig = groupedbar(nam, Matrix(df[:, Not(factor)]), group = ctg, color_palette = MY_COLOR_PALETTE)
 		plot!(xlabel = "Groups", ylabel = "Individuals")
