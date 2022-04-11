@@ -27,13 +27,17 @@ function main()
 	SEED_VALUE = 2022
 	Random.seed!(SEED_VALUE)
 
+	#MY_COLOR_PALETTE = palette(:Paired_8)
+	#MY_COLOR_PALETTE = palette(:bone, 5)
+	MY_COLOR_PALETTE = palette(:tab10)
+	#MY_COLOR_PALETTE = palette(:linear_bmy_10_95_c71_n256, 5)
+	#MY_COLOR_PALETTE = palette(:tol_bright)
+
 	# Read in DataFrames from files
 	conditions_df = get_data("conditions.csv")
 	demographics_df = get_data("patients.csv")
 
-	# Generate topics
-	#TODO: do not use names directly as symbols
-	#TODO: Instead, make a dictionary 
+	# Generate topics (Short and full names)
 	TOPICS=[
 		["Miscarriage", "Miscarriage in first trimester"],
 		["Retinopathy", "Diabetic retinopathy associated with type II diabetes mellitus (disorder)"],
@@ -50,12 +54,6 @@ function main()
 		rename!(df, Dict(:nrow => :Total))
 		push!(DEMOGRAPHICS, factor => df)
 	end
-
-	#MY_COLOR_PALETTE = palette(:Paired_8)
-	#MY_COLOR_PALETTE = palette(:bone, 5)
-	#MY_COLOR_PALETTE = palette(:tab10)
-	#MY_COLOR_PALETTE = palette(:linear_bmy_10_95_c71_n256, 5)
-	MY_COLOR_PALETTE = palette(:tol_bright)
 
 	FEASIBILITY = DataFrame(Set=["Total"], Number=nrow(conditions_df), Percentage=[100.0], Accuracy=[0.0], F1=[0.0])
 
@@ -104,7 +102,7 @@ function main()
 
 		end
 
-		# Print bar charts for demographics
+		# Print pie charts for demographics
 		fig1 = plot(plots..., layout = (length(FACTORS), length(DATAFRAMES)))
 		plot!(plot_title = window_title = "$short_name")
 		savefig(fig1, "demographics_$i.png")
@@ -117,6 +115,7 @@ function main()
 
 	sort(FEASIBILITY, :Number, rev=true) |> println
 
+	# Demographics bar charts
 	for i in 1:length(FACTORS)
 		factor = FACTORS[i]
 		df = coalesce.(DEMOGRAPHICS[factor],0)
