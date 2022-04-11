@@ -130,8 +130,8 @@ Top 20
 			for df in DATAFRAMES
 				x = top_n_values(df, factor, 12)
 				y = pie(x[!,factor], x.nrow, color_palette = MY_COLOR_PALETTE) # Cannot handle missing values
-				plot!(fontfamily="Computer Modern")
-				plot!(label="f")
+				#plot!(fontfamily="Computer Modern")
+				#plot!(label="f")
 				push!(plots, y)
 			end
 		a = top_n_values(topic_1_demographics, factor, 12)
@@ -141,7 +141,7 @@ Top 20
 
 		end
 	fig1 = plot(plots..., layout = (length(FACTORS), length(DATAFRAMES)))
-	plot!(plot_title="$topic_1")
+	plot!(plot_title = window_title = "$topic_1")
 	savefig(fig1, "demographics_$i.png")
 
 	end
@@ -156,12 +156,13 @@ Top 20
 		ctg = repeat(df[!,factor], outer = ncol(df)-1)
 		nam = repeat(names(df[:, Not(factor)]), inner = nrow(df))
 
-		fig = groupedbar(nam, Matrix(df[:, Not(factor)]), group = ctg)
+		fig = groupedbar(nam, Matrix(df[:, Not(factor)]), group = ctg, color_palette = MY_COLOR_PALETTE)
 		plot!(xlabel = "Groups", ylabel = "Individuals")
-		plot!(fig, title = "$factor")
-		plot!(fig, bar_width = 0.67, lw = 0, framestyle = :box)
+		plot!(fig, plot_title = window_title = "$factor")
+		#plot!(fig, bar_width = 0.67, lw = 0, framestyle = :box)
 		plot!(legend=:topleft)
-		plot!(fillcolor = MY_COLOR_PALETTE) # TODO: get this working
+		#plot!(fillcolor = MY_COLOR_PALETTE) # TODO: get this working
+				plot!(color_palette = MY_COLOR_PALETTE)
 
 		savefig(fig, "bars_$i")
 	end
