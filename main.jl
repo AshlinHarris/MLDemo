@@ -67,8 +67,6 @@ Top 20
  "Hyperlipidemia"
 =#
 
-	TOPICS |> display
-
 	# Demographic DataFrames
 	DEMOGRAPHICS = Dict()
 	FACTORS = [:RACE, :ETHNICITY, :GENDER]
