@@ -34,6 +34,8 @@ function main()
 	#top_n_values(conditions_df, :DESCRIPTION, 20)[!,:DESCRIPTION] |> display
 
 	# Generate topics
+	#TODO: do not use names directly as symbols
+	#TODO: Instead, make a dictionary 
 	TOPICS=[]
 	#TOPICS = top_n_values(conditions_df, :DESCRIPTION, 1)[!,:DESCRIPTION]
 	#push!(TOPICS, "Miscarriage in first trimester")
@@ -97,7 +99,6 @@ Top 20
 		#println("Example study: Allergy associations")
 
 		topic_2_df = get_data("allergies.csv")
-		#topic_2_df |> display
 
 		#with_topic_2 = dataframe_subset(topic_2_df, topic_1_only)
 		#with_topic_2 |> display
@@ -105,13 +106,15 @@ Top 20
 		# Generate composite DataFrame
 		composite_df = boolean_unstack(topic_2_df, :PATIENT, :DESCRIPTION)
 		add_target_column!(composite_df, :MISCARRIAGE, topic_1_only)
-		#composite_df |> display
 
-		#if nrow(with_topic_2) != 0
+
+		if nrow(composite_df) == 0
+			acc, f1_score = 0.0, 0.0
+		else
 			# Machine learning
 			RNG_VALUE = abs(rand(Int))
 			acc, f1_score= run_decision_tree(composite_df, :MISCARRIAGE, RNG_VALUE)
-		#end
+		end
 
 		### DEMOGRAPHICS ###
 
