@@ -103,10 +103,6 @@ Top 20
 			# Machine learning
 			RNG_VALUE = abs(rand(Int))
 			acc, f1_score= run_decision_tree(composite_df, :MISCARRIAGE, RNG_VALUE)
-			
-			# Results
-			@printf("Accuracy: %.3f\n", acc)
-			@printf("F1 Score: %.3f\n", f1_score)
 		#end
 
 		### DEMOGRAPHICS ###
