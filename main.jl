@@ -76,7 +76,11 @@ Top 20
 		push!(DEMOGRAPHICS, factor => df)
 	end
 
-	MY_COLOR_PALETTE = palette(:Paired_8)
+	#MY_COLOR_PALETTE = palette(:Paired_8)
+	#MY_COLOR_PALETTE = palette(:bone, 5)
+	#MY_COLOR_PALETTE = palette(:tab10)
+	#MY_COLOR_PALETTE = palette(:linear_bmy_10_95_c71_n256, 5)
+	MY_COLOR_PALETTE = palette(:tol_bright)
 
 	FEASIBILITY = DataFrame(Set=["Total"], Number=nrow(conditions_df), Percentage=[100.0], Accuracy=[0.0], F1=[0.0])
 
