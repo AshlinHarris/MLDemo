@@ -149,8 +149,8 @@ Top 20
 
 	end
 
-	i=1
-	for factor in FACTORS
+	for i in 1:length(FACTORS)
+		factor = FACTORS[i]
 		df = DEMOGRAPHICS[factor]
 		println(df)
 
@@ -165,7 +165,6 @@ Top 20
 		plot!(fillcolor = MY_COLOR_PALETTE) # TODO: get this working
 
 		savefig(fig, "bars_$i")
-		i=i+1
 	end
 	return nothing
 end
