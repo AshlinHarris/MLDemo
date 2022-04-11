@@ -115,7 +115,7 @@ function main()
 		push!(FEASIBILITY, [short_name, selected, 100 * (selected / total), acc, f1_score])
 	end
 
-	display(FEASIBILITY)
+	sort(FEASIBILITY, :Number, rev=true) |> println
 
 	for i in 1:length(FACTORS)
 		factor = FACTORS[i]
