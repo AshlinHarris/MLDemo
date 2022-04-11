@@ -99,7 +99,6 @@ function main()
 			a = top_n_values(topic_1_demographics, factor, 12)
 			rename!(a, Dict(:nrow => short_name))
 			DEMOGRAPHICS[factor] = outerjoin(DEMOGRAPHICS[factor], a, on=factor, matchmissing=:equal)
-
 		end
 
 		# Print pie charts for demographics
