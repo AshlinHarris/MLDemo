@@ -99,7 +99,7 @@ Top 20
 		composite_df = boolean_unstack(topic_2_df, :PATIENT, :DESCRIPTION)
 		add_target_column!(composite_df, :MISCARRIAGE, topic_1_only)
 
-		if nrow(with_topic_2) != 0
+		#if nrow(with_topic_2) != 0
 			# Machine learning
 			RNG_VALUE = abs(rand(Int))
 			acc, f1_score= run_decision_tree(composite_df, :MISCARRIAGE, RNG_VALUE)
@@ -107,7 +107,7 @@ Top 20
 			# Results
 			@printf("Accuracy: %.3f\n", acc)
 			@printf("F1 Score: %.3f\n", f1_score)
-		end
+		#end
 
 		### DEMOGRAPHICS ###
 
