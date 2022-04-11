@@ -78,7 +78,7 @@ Top 20
 
 	MY_COLOR_PALETTE = palette(:Paired_8)
 
-	FEASIBILITY = DataFrame(Set=["Total"], Number=nrow(conditions_df), Percentage=[100.0])
+	FEASIBILITY = DataFrame(Set=["Total"], Number=nrow(conditions_df), Percentage=[100.0], Accuracy=[0.0], F1=[0.0])
 
 	# Filter DataFrames
 	for i in 1:length(TOPICS)
@@ -115,7 +115,7 @@ Top 20
 		selected = nrow(topic_1_only)
 		total = nrow(conditions_df)
 
-		push!(FEASIBILITY, [topic_1, selected, 100 * (selected / total)])
+		push!(FEASIBILITY, [topic_1, selected, 100 * (selected / total), acc, f1_score])
 
 		# From the demographics DataFrame, take only PATIENTS with the primary topic condition
 		#TODO: dataframe_subset() should be generalized to handle this
