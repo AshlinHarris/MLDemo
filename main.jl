@@ -4,7 +4,7 @@ using ColorSchemes
 using DataFrames
 using MLJ
 using Plots
-using Printf
+#using Printf
 using Random
 using Revise
 using StatsPlots
