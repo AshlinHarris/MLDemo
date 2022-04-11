@@ -117,11 +117,6 @@ Top 20
 		selected = nrow(topic_1_only)
 		total = nrow(conditions_df)
 
-		@printf("%s: %s\n", "Study feasibility", topic_1)
-		@printf("%30s: %7d\n", "Total number of entries", total)
-		@printf("    %26s: %7d (%6.2f%%)\n", "Selected entries", selected, 100 * selected / total)
-		#@printf("%30s: %7d\n", "Total number of entries", nrow(topic_1_only))
-
 		push!(FEASIBILITY, [topic_1, selected, 100 * (selected / total)])
 
 		# From the demographics DataFrame, take only PATIENTS with the primary topic condition
