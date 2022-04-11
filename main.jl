@@ -80,6 +80,8 @@ Top 20
 
 	MY_COLOR_PALETTE = palette(:Paired_8)
 
+	FEASIBILITY = DataFrame(Set=["Total"], Number=nrow(conditions_df), Percentage=[100.0])
+
 	# Filter DataFrames
 	for i in 1:length(TOPICS)
 		topic_1 = TOPICS[i]
@@ -117,8 +119,10 @@ Top 20
 
 		@printf("%s: %s\n", "Study feasibility", topic_1)
 		@printf("%30s: %7d\n", "Total number of entries", total)
-		@printf("    %26s: %7d (%6.2f%%)\n", "Selected entries", selected, 100 * (selected / total))
+		@printf("    %26s: %7d (%6.2f%%)\n", "Selected entries", selected, 100 * selected / total)
 		#@printf("%30s: %7d\n", "Total number of entries", nrow(topic_1_only))
+
+		push!(FEASIBILITY, [topic_1, selected, 100 * (selected / total)])
 
 		# From the demographics DataFrame, take only PATIENTS with the primary topic condition
 		#TODO: dataframe_subset() should be generalized to handle this
@@ -148,6 +152,8 @@ Top 20
 	savefig(fig1, "demographics_$i.png")
 
 	end
+
+	display(FEASIBILITY)
 
 	for i in 1:length(FACTORS)
 		factor = FACTORS[i]
