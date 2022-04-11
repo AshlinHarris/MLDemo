@@ -34,14 +34,13 @@ function main()
 	# Generate topics
 	#TODO: do not use names directly as symbols
 	#TODO: Instead, make a dictionary 
-	TOPICS=Dict(
-		"Miscarriage" => "Miscarriage in first trimester",
-		"Retinopathy" => "Diabetic retinopathy associated with type II diabetes mellitus (disorder)",
-		"Obesity" => "Body mass index 30+ - obesity (finding)",
-		"Anemia" =>"Anemia (disorder)",
-		"Hypertension" => "Hypertension",
-		"Prediabetes" => "Prediabetes",
-	)
+	TOPICS=[
+		["Miscarriage", "Miscarriage in first trimester"],
+		["Retinopathy", "Diabetic retinopathy associated with type II diabetes mellitus (disorder)"],
+		["Obesity", "Body mass index 30+ - obesity (finding)"],
+		["Hypertension", "Hypertension"],
+		["Prediabetes", "Prediabetes"],
+	]
 
 	# Demographic DataFrames
 	DEMOGRAPHICS = Dict()
@@ -61,10 +60,8 @@ function main()
 	FEASIBILITY = DataFrame(Set=["Total"], Number=nrow(conditions_df), Percentage=[100.0], Accuracy=[0.0], F1=[0.0])
 
 	# Filter DataFrames
-i=1
-	#for i in 1:length(TOPICS)
-	for short_name in keys(TOPICS)
-		topic_1 = TOPICS[short_name]
+	for i in 1:length(TOPICS)
+		short_name, topic_1 = TOPICS[i]
 
 		# DataFrame subsets
 		topic_1_only = dataframe_subset(conditions_df, topic_1)
@@ -116,8 +113,6 @@ i=1
 		selected = nrow(topic_1_only)
 		total = nrow(conditions_df)
 		push!(FEASIBILITY, [short_name, selected, 100 * (selected / total), acc, f1_score])
-
-		i=i+1
 	end
 
 	display(FEASIBILITY)
