@@ -93,11 +93,15 @@ Top 20
 		#println("Example study: Allergy associations")
 
 		topic_2_df = get_data("allergies.csv")
-		with_topic_2 = dataframe_subset(topic_2_df, topic_1_only)
+		#topic_2_df |> display
+
+		#with_topic_2 = dataframe_subset(topic_2_df, topic_1_only)
+		#with_topic_2 |> display
 
 		# Generate composite DataFrame
 		composite_df = boolean_unstack(topic_2_df, :PATIENT, :DESCRIPTION)
 		add_target_column!(composite_df, :MISCARRIAGE, topic_1_only)
+		#composite_df |> display
 
 		#if nrow(with_topic_2) != 0
 			# Machine learning
