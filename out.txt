@@ -1,0 +1,32 @@
+6×5 DataFrame
+ Row ¦ Set           Number  Percentage  Accuracy  F1
+     ¦ String        Int64   Float64     Float64   Float64
+-----+-------------------------------------------------------
+   1 ¦ Total         114544  100.0       0.0       0.0
+   2 ¦ Obesity         5002    4.36688   0.715686  0.0
+   3 ¦ Prediabetes     3917    3.41965   0.712418  0.0
+   4 ¦ Hypertension    3168    2.76575   0.777778  0.0555556
+   5 ¦ Miscarriage     2212    1.93114   0.869281  0.0
+   6 ¦ Retinopathy      231    0.201669  0.993464  0.0
+5×7 DataFrame
+ Row ¦ RACE     Total  Miscarriage  Retinopathy  Obesity  Hypertension  Prediabetes
+     ¦ String7  Int64  Int64        Int64        Int64    Int64         Int64
+-----+------------------------------------------------------------------------------
+   1 ¦ white    10328         1911          167     4221          2612         3219
+   2 ¦ black     1100          156           36      455           291          387
+   3 ¦ asian      842          127           28      293           245          280
+   4 ¦ native      73           16            0       31            18           28
+   5 ¦ other        9            2            0        2             2            3
+2×7 DataFrame
+ Row ¦ ETHNICITY    Total  Miscarriage  Retinopathy  Obesity  Hypertension  Prediabetes
+     ¦ String15     Int64  Int64        Int64        Int64    Int64         Int64
+-----+----------------------------------------------------------------------------------
+   1 ¦ nonhispanic  11036         1961          208     4469          2825         3511
+   2 ¦ hispanic      1316          251           23      533           343          406
+2×7 DataFrame
+ Row ¦ GENDER   Total  Miscarriage  Retinopathy  Obesity  Hypertension  Prediabetes
+     ¦ String1  Int64  Int64        Int64        Int64    Int64         Int64
+-----+------------------------------------------------------------------------------
+   1 ¦ M         6099            0          113     2372          1614         1999
+   2 ¦ F         6253         2212          118     2630          1554         1918
+
