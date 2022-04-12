@@ -78,13 +78,15 @@ function run_decision_tree(df::AbstractDataFrame, output::Symbol, RNG_VALUE)::Tu
 	
 	train, test = partition(eachindex(y), 0.8, shuffle = true, rng = RNG_VALUE)
 
+	# Evaluate model
 	Tree = @load DecisionTreeClassifier pkg=DecisionTree verbosity=0
 	tree_model = Tree(max_depth = 3)
-	tree = machine(tree_model, X, y)
+	evaluate(tree_model, X, y) |> display
 
+	# Return scores
+	tree = machine(tree_model, X, y)
 	fit!(tree, rows = train)
 	yhat = predict(tree, X[test, :])
-
 	acc = accuracy(MLJ.mode.(yhat), y[test])
 	f1_score = f1score(MLJ.mode.(yhat), y[test])
 
