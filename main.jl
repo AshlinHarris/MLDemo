@@ -37,6 +37,8 @@ function main()
 	conditions_df = get_data("conditions.csv")
 	demographics_df = get_data("patients.csv")
 
+	println( top_n_values(conditions_df, :DESCRIPTION, 12))
+
 	# Generate topics (Short and full names)
 	TOPICS=[
 		["Miscarriage", "Miscarriage in first trimester"],
