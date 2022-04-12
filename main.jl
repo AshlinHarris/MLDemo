@@ -55,7 +55,7 @@ function main()
 		push!(DEMOGRAPHICS, factor => df)
 	end
 
-	FEASIBILITY = DataFrame(Set=["Total"], Number=nrow(conditions_df), Percentage=[100.0], Accuracy=[0.0], F1=[0.0])
+	FEASIBILITY = DataFrame(Set=["Total"], Number=nrow(conditions_df), Percentage=[100.0], Accuracy=[NaN], F1=[NaN])
 
 	# Filter DataFrames
 	for i in 1:length(TOPICS)
@@ -73,7 +73,7 @@ function main()
 
 		# Machine learning
 		if nrow(composite_df) == 0
-			acc, f1_score = 0.0, 0.0
+			acc, f1_score = NaN, NaN
 		else
 			RNG_VALUE = abs(rand(Int))
 			acc, f1_score= run_decision_tree(composite_df, :MISCARRIAGE, RNG_VALUE)
