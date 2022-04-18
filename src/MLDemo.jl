@@ -30,11 +30,21 @@ Return the contents of a CSV file as a DataFrame
 function get_data(file_name::String)::AbstractDataFrame
 	conf = ConfParse("./config.ini")
 	parse_conf!(conf)
+	path = retrieve(conf, "local", "input_directory")
+	
+	file = joinpath(path, file_name)
+	return File(file, header = 1) |> DataFrame
+end
+
+function get_directory(file_name::String)::String
+	conf = ConfParse("./config.ini")
+	parse_conf!(conf)
 	path = retrieve(conf, "local", "path")
 	
 	file = joinpath(path, file_name)
 	return File(file, header = 1) |> DataFrame
 end
+
 
 """
 	function dataframe_subset(df::AbstractDataFrame, check::Any)::AbstractDataFrame
