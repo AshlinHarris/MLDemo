@@ -40,7 +40,13 @@ function main()
 	conditions_df = get_data("conditions.csv")
 	demographics_df = get_data("patients.csv")
 
-	println( top_n_values(conditions_df, :DESCRIPTION, 12))
+	n = 12
+	println("#########################################")
+	println("#  Top $n condition classifiers by count:")
+	println("#########################################")
+	println( top_n_values(conditions_df, :DESCRIPTION, n))
+	println()
+	println()
 
 	# Generate topics (Short and full names)
 	TOPICS=[
@@ -62,9 +68,17 @@ function main()
 
 	FEASIBILITY = DataFrame(Set=["Total"], Number=nrow(conditions_df), Percentage=[100.0], Accuracy=[NaN], F1=[NaN])
 
+	println("#########################################")
+	println("#  Machine learning:")
+	println("#########################################")
+	println()
+
 	# Filter DataFrames
 	for i in 1:length(TOPICS)
 		short_name, topic_1 = TOPICS[i]
+		println("+----------------------------------------")
+		println("|  $short_name:")
+		println("+----------------------------------------")
 
 		# DataFrame subsets
 		topic_1_only = dataframe_subset(conditions_df, topic_1)
@@ -115,9 +129,16 @@ function main()
 		selected = nrow(topic_1_only)
 		total = nrow(conditions_df)
 		push!(FEASIBILITY, [short_name, selected, 100 * (selected / total), acc, f1_score])
+
+		println()
+		println()
 	end
 
+	println("#########################################")
+	println("#  Aggregate demographic data:")
+	println("#########################################")
 	sort(FEASIBILITY, :Number, rev=true) |> println
+
 
 	# Demographics bar charts
 	for i in 1:length(FACTORS)
