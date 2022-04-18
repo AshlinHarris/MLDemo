@@ -12,9 +12,12 @@ using StatsPlots
 includet("src/MLDemo.jl")
 using .MLDemo
 
+#=
+# THIS FUNCTION DELETES ALL PNG FILES IN THE DIRECTORY
 function clean()
 	foreach(rm, filter(endswith(".png"), readdir()))
 end
+=#
 
 
 """
