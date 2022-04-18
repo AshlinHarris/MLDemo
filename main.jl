@@ -106,7 +106,7 @@ function main()
 		# Print pie charts for demographics
 		fig1 = plot(plots..., layout = (length(FACTORS), length(DATAFRAMES)))
 		plot!(plot_title = window_title = "$short_name")
-		savefig(fig1, "demographics_$i.png")
+		savefig(fig1, get_outfile("demographics_$i.png"))
 
 		# Study feasibility
 		selected = nrow(topic_1_only)
@@ -130,7 +130,7 @@ function main()
 		plot!(fig, plot_title = window_title = "$factor")
 		plot!(legend=:topleft)
 
-		savefig(fig, "bars_$i")
+		savefig(fig, get_outfile("bars_$i.png"))
 	end
 
 	return nothing

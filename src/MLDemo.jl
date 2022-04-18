@@ -1,5 +1,5 @@
 module MLDemo
-export add_target_column!, get_data, dataframe_subset, boolean_unstack, number_with, run_decision_tree, top_n_values
+export add_target_column!, get_data, get_outfile, dataframe_subset, boolean_unstack, number_with, run_decision_tree, top_n_values
 
 using ConfParser # Parse, modify, write to configuration files
 using DataFrames
