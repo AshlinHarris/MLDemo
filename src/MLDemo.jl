@@ -36,13 +36,12 @@ function get_data(file_name::String)::AbstractDataFrame
 	return File(file, header = 1) |> DataFrame
 end
 
-function get_directory(file_name::String)::String
+function get_outfile(file_name::String)::String
 	conf = ConfParse("./config.ini")
 	parse_conf!(conf)
-	path = retrieve(conf, "local", "path")
+	path = retrieve(conf, "local", "output_directory")
 	
-	file = joinpath(path, file_name)
-	return File(file, header = 1) |> DataFrame
+	return joinpath(path, file_name)
 end
 
 
