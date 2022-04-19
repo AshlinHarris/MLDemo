@@ -86,9 +86,13 @@ function main()
 		#with_topic_2 = dataframe_subset(topic_2_df, topic_1_only)
 		#with_topic_2 |> display
 
+		topic_2_df |> display
+
 		# Generate composite DataFrame
 		composite_df = boolean_unstack(topic_2_df, :PATIENT, :DESCRIPTION)
 		add_target_column!(composite_df, :MISCARRIAGE, topic_1_only)
+
+		composite_df |> display
 
 		# Machine learning
 		if nrow(composite_df) == 0
