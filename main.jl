@@ -1,6 +1,8 @@
 #!/usr/bin/env julia
 
 using ColorSchemes
+using ConfParser # Parse, modify, write to configuration files
+using CSV: File
 using DataFrames
 using MLJ
 using Plots
@@ -17,7 +19,7 @@ global OUTFILES = []
 """
 	function clean()
 
-Remove all outfiles produced by 
+Remove outfiles produced by main()
 """
 function clean()
 	foreach(rm, OUTFILES)
@@ -44,8 +46,14 @@ function main()
 	#MY_COLOR_PALETTE = palette(:tol_bright)
 
 	# Read in DataFrames from files
-	conditions_df = get_data("conditions.csv")
-	demographics_df = get_data("patients.csv")
+	conf = ConfParse("./config.ini")
+	parse_conf!(conf)
+	IN_DIR = retrieve(conf, "local", "input_directory")
+	OUT_DIR = retrieve(conf, "local", "output_directory")
+
+	conditions_df =   File(joinpath(IN_DIR, "conditions.csv"), header = 1) |> DataFrame
+	demographics_df = File(joinpath(IN_DIR, "patients.csv"), header = 1) |> DataFrame
+	topic_2_df = File(joinpath(IN_DIR, "allergies.csv"), header = 1) |> DataFrame
 
 	n = 12
 	println("#########################################")
@@ -89,7 +97,6 @@ function main()
 
 		# DataFrame subsets
 		topic_1_only = dataframe_subset(conditions_df, topic_1)
-		topic_2_df = get_data("allergies.csv")
 		#with_topic_2 = dataframe_subset(topic_2_df, topic_1_only)
 		#with_topic_2 |> display
 
@@ -134,7 +141,7 @@ function main()
 		# Print pie charts for demographics
 		fig1 = plot(plots..., layout = (length(FACTORS), length(DATAFRAMES)))
 		plot!(plot_title = window_title = "$short_name")
-		file_name = get_outfile("demographics_$i.png")
+		file_name = joinpath(OUT_DIR, "demographics_$i.png")
 		savefig(fig1, file_name)
 		push!(OUTFILES, file_name)
 		
@@ -168,7 +175,7 @@ function main()
 		plot!(fig, plot_title = window_title = "$factor")
 		plot!(legend=:topleft)
 
-		file_name = get_outfile("bars_$i.png")
+		file_name = joinpath(OUT_DIR, "bars_$i.png")
 		savefig(fig, file_name)
 		push!(OUTFILES, file_name)
 	end
