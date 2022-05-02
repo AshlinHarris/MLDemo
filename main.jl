@@ -176,6 +176,26 @@ function main()
 end
 
 function omop()
+
+	SEED_VALUE = 2022
+	Random.seed!(SEED_VALUE)
+
+	# Read in DataFrames from files
+	conf = ConfParse("./config.ini")
+	parse_conf!(conf)
+	IN_DIR = retrieve(conf, "local", "input_directory")
+	OUT_DIR = retrieve(conf, "local", "output_directory")
+
+	conditions_df   = File(joinpath(IN_DIR, "condition_era.csv"), header = 1) |> DataFrame
+
+	n = 12
+	println("#########################################")
+	println("#  Top $n condition classifiers by count:")
+	println("#########################################")
+	println( top_n_values(conditions_df, :condition_concept_id, n))
+	println()
+	println()
+
 	return nothing
 end
 
