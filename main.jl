@@ -92,8 +92,8 @@ function main()
 		println("+----------------------------------------")
 
 		# DataFrame subsets
-		topic_1_only = dataframe_subset(conditions_df, topic_1)
-		#with_topic_2 = dataframe_subset(topic_2_df, topic_1_only)
+		topic_1_only = dataframe_subset(conditions_df, topic_1, :DESCRIPTION)
+		#with_topic_2 = dataframe_subset(topic_2_df, topic_1_only, :DESCRIPTION)
 		#with_topic_2 |> display
 
 		# Generate composite DataFrame
@@ -183,18 +183,20 @@ function omop()
 	# Read in DataFrames from files
 	conf = ConfParse("./config.ini")
 	parse_conf!(conf)
-	IN_DIR = retrieve(conf, "local", "input_directory")
+	IN_DIR = "/home/ashlin/GitHub/mimic-iv-demo-data-in-the-omop-common-data-model-0.9/1_omop_data_csv"
 	OUT_DIR = retrieve(conf, "local", "output_directory")
 
 	conditions_df   = File(joinpath(IN_DIR, "condition_era.csv"), header = 1) |> DataFrame
 
-	n = 12
-	println("#########################################")
-	println("#  Top $n condition classifiers by count:")
-	println("#########################################")
-	println( top_n_values(conditions_df, :condition_concept_id, n))
-	println()
-	println()
+	n = 5
+	column_name = :condition_concept_id
+	conditions_df = top_n_values(conditions_df, column_name, n)
+	println(conditions_df)
+	TOPICS = conditions_df[!,column_name]
+	for i in 1:length(TOPICS)
+		topic_1 = TOPICS[i]
+		#topic_1_only = dataframe_subset(conditions_df, topic_1, column_name)
+	end
 
 	return nothing
 end
