@@ -1,5 +1,5 @@
 module MLDemo
-export add_target_column!, get_data, get_outfile, dataframe_subset, boolean_unstack, number_with, run_decision_tree, top_n_values
+export add_target_column!, dataframe_subset, boolean_unstack, number_with, run_decision_tree, top_n_values
 
 using DataFrames
 using MLJ
@@ -27,11 +27,11 @@ Return a DataFrame subset
 For check::DataFrame, including only PATIENTs present in check
 Otherwise, Subset DataFrame of PATIENTs with condition
 """
-function dataframe_subset(df::AbstractDataFrame, check::AbstractDataFrame)::DataFrame
-	return filter(:DESCRIPTION => x -> x in check.PATIENT, df)
+function dataframe_subset(df::AbstractDataFrame, check::AbstractDataFrame, column)::DataFrame
+	return filter(column => x -> x in check.PATIENT, df)
 end
-function dataframe_subset(df::AbstractDataFrame, check::Any)::AbstractDataFrame
-	return filter(:DESCRIPTION => x -> isequal(x, check), df)
+function dataframe_subset(df::AbstractDataFrame, check::Any, column)::AbstractDataFrame
+	return filter(column => x -> isequal(x, check), df)
 end
 
 """
