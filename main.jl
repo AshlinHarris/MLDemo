@@ -12,9 +12,15 @@ using StatsPlots
 includet("src/MLDemo.jl")
 using .MLDemo
 
-# THIS FUNCTION DELETES ALL PNG FILES IN THE DIRECTORY
+global OUTFILES = []
+
+"""
+	function clean()
+
+Remove all outfiles produced by 
+"""
 function clean()
-	foreach(rm, filter(endswith(".png"), readdir()))
+	#foreach(rm, OUTFILES)
 end
 
 
@@ -27,6 +33,8 @@ function main()
 
 	SEED_VALUE = 2022
 	Random.seed!(SEED_VALUE)
+
+	global OUTFILES = []
 
 	#MY_COLOR_PALETTE = palette(:Paired_8)
 	#MY_COLOR_PALETTE = palette(:bone, 5)
@@ -125,7 +133,10 @@ function main()
 		# Print pie charts for demographics
 		fig1 = plot(plots..., layout = (length(FACTORS), length(DATAFRAMES)))
 		plot!(plot_title = window_title = "$short_name")
-		savefig(fig1, get_outfile("demographics_$i.png"))
+		file_name = get_outfile("demographics_$i.png")
+		savefig(fig1, file_name)
+		push!(OUTFILES, file_name)
+		
 
 		# Study feasibility
 		selected = nrow(topic_1_only)
@@ -156,8 +167,12 @@ function main()
 		plot!(fig, plot_title = window_title = "$factor")
 		plot!(legend=:topleft)
 
-		savefig(fig, get_outfile("bars_$i.png"))
+		file_name = get_outfile("bars_$i.png")
+		savefig(fig, file_name)
+		push!(OUTFILES, file_name)
 	end
+
+	println(OUTFILES)
 
 	return nothing
 end
