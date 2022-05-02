@@ -26,12 +26,13 @@ end
 Return a DataFrame subset
 For check::DataFrame, including only PATIENTs present in check
 Otherwise, Subset DataFrame of PATIENTs with condition
+Condition column name is given by symb
 """
-function dataframe_subset(df::AbstractDataFrame, check::AbstractDataFrame, column)::DataFrame
-	return filter(column => x -> x in check.PATIENT, df)
+function dataframe_subset(df::AbstractDataFrame, check::AbstractDataFrame, symb::Symbol)::DataFrame
+	return filter(symb => x -> x in check.PATIENT, df)
 end
-function dataframe_subset(df::AbstractDataFrame, check::Any, column)::AbstractDataFrame
-	return filter(column => x -> isequal(x, check), df)
+function dataframe_subset(df::AbstractDataFrame, check::Any, symb::Symbol)::AbstractDataFrame
+	return filter(symb => x -> isequal(x, check), df)
 end
 
 """
