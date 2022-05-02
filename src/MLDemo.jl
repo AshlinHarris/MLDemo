@@ -1,12 +1,10 @@
 module MLDemo
 export add_target_column!, get_data, get_outfile, dataframe_subset, boolean_unstack, number_with, run_decision_tree, top_n_values
 
-using ConfParser # Parse, modify, write to configuration files
 using DataFrames
 using MLJ
 using MLJDecisionTreeInterface
 
-using CSV: File
 using StatsBase: countmap
 
 """
@@ -19,29 +17,6 @@ function add_target_column!(df::AbstractDataFrame, symb::Symbol, target_df::Abst
 	insertcols!(df, symb => [x[:PATIENT] in target_df.PATIENT for x in eachrow(df)])
 	coerce!(df, symb => OrderedFactor{2})
 	return nothing
-end
-
-
-"""
-	function get_data(file_name::String)::AbstractDataFrame
-
-Return the contents of a CSV file as a DataFrame
-"""
-function get_data(file_name::String)::AbstractDataFrame
-	conf = ConfParse("./config.ini")
-	parse_conf!(conf)
-	path = retrieve(conf, "local", "input_directory")
-	
-	file = joinpath(path, file_name)
-	return File(file, header = 1) |> DataFrame
-end
-
-function get_outfile(file_name::String)::String
-	conf = ConfParse("./config.ini")
-	parse_conf!(conf)
-	path = retrieve(conf, "local", "output_directory")
-	
-	return joinpath(path, file_name)
 end
 
 
