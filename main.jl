@@ -20,7 +20,7 @@ global OUTFILES = []
 Remove all outfiles produced by 
 """
 function clean()
-	#foreach(rm, OUTFILES)
+	foreach(rm, OUTFILES)
 end
 
 
