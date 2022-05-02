@@ -41,8 +41,8 @@ function main()
 
 	#MY_COLOR_PALETTE = palette(:Paired_8)
 	#MY_COLOR_PALETTE = palette(:bone, 5)
-	MY_COLOR_PALETTE = palette(:tab10)
-	#MY_COLOR_PALETTE = palette(:linear_bmy_10_95_c71_n256, 5)
+	#MY_COLOR_PALETTE = palette(:tab9)
+	MY_COLOR_PALETTE = palette(:linear_bmy_10_95_c71_n256, 5)
 	#MY_COLOR_PALETTE = palette(:tol_bright)
 
 	# Read in DataFrames from files
