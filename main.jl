@@ -174,7 +174,11 @@ function main()
 
 	return nothing
 end
+"""
+	omop()
 
+Experimental pipeline for OMOP Common Data Format
+"""
 function omop()
 
 	SEED_VALUE = 2022
