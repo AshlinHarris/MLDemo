@@ -30,7 +30,7 @@ end
 """
 	function main()
 
-Machine Learning in Julia with Synthetic Data
+Machine Learning in Julia with Synthea
 """
 function main()
 
@@ -47,9 +47,9 @@ function main()
 	IN_DIR = retrieve(conf, "local", "input_directory")
 	OUT_DIR = retrieve(conf, "local", "output_directory")
 
-	conditions_df =   File(joinpath(IN_DIR, "conditions.csv"), header = 1) |> DataFrame
-	demographics_df = File(joinpath(IN_DIR, "patients.csv"), header = 1) |> DataFrame
-	topic_2_df = File(joinpath(IN_DIR, "allergies.csv"), header = 1) |> DataFrame
+	conditions_df   = File(joinpath(IN_DIR, "conditions.csv"), header = 1) |> DataFrame
+	demographics_df = File(joinpath(IN_DIR,   "patients.csv"), header = 1) |> DataFrame
+	topic_2_df      = File(joinpath(IN_DIR,  "allergies.csv"), header = 1) |> DataFrame
 
 	n = 12
 	println("#########################################")
@@ -172,6 +172,10 @@ function main()
 		push!(OUTFILES, file_name)
 	end
 
+	return nothing
+end
+
+function omop()
 	return nothing
 end
 
