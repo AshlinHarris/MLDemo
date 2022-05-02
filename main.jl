@@ -21,6 +21,7 @@ Remove all outfiles produced by
 """
 function clean()
 	foreach(rm, OUTFILES)
+	global OUTFILES = []
 end
 
 
