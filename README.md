@@ -12,4 +12,4 @@ along with the standard output (`out.txt`).
 
 # Future
 Currently, the pipeline in `main.jl` pulls functions from `src/MLDemo.jl`.
-I plan to share these as a publicly-available Julia package: https://github.com/AshlinHarris/PreprocessMD.jl
+All features are being integrated into the publicly-available Julia package: https://github.com/bcbi/PreprocessMD.jl
