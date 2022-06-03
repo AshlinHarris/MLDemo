@@ -45,7 +45,13 @@ function main()
 	conf = ConfParse("./config.ini")
 	parse_conf!(conf)
 	IN_DIR = retrieve(conf, "local", "input_directory")
+	if(isempty(IN_DIR))
+		@error "MLDEMO: Input directory must be specified in config.ini!"
+	end
 	OUT_DIR = retrieve(conf, "local", "output_directory")
+	if(isempty(OUT_DIR))
+		@error "MLDEMO: Input directory must be specified in config.ini!"
+	end
 
 	conditions_df   = File(joinpath(IN_DIR, "conditions.csv"), header = 1) |> DataFrame
 	demographics_df = File(joinpath(IN_DIR,   "patients.csv"), header = 1) |> DataFrame
