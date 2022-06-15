@@ -1,4 +1,4 @@
-module MLDemo
+module MLDemo_old
 export add_target_column!, dataframe_subset, boolean_unstack, number_with, run_decision_tree, top_n_values
 
 using DataFrames

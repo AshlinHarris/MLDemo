@@ -9,10 +9,11 @@ using Plots
 #using Printf
 using Random
 using Revise
+using PreprocessMD
 using StatsPlots
 
 includet("src/MLDemo.jl")
-using .MLDemo
+using .MLDemo_old
 
 global OUTFILES = []
 
@@ -98,8 +99,8 @@ function main()
 		println("+----------------------------------------")
 
 		# DataFrame subsets
-		topic_1_only = dataframe_subset(conditions_df, topic_1, :DESCRIPTION)
-		#with_topic_2 = dataframe_subset(topic_2_df, topic_1_only, :DESCRIPTION)
+		topic_1_only = MLDemo_old.dataframe_subset(conditions_df, topic_1, :DESCRIPTION)
+		#with_topic_2 = MLDemo_old.dataframe_subset(topic_2_df, topic_1_only, :DESCRIPTION)
 		#with_topic_2 |> display
 
 		# Generate composite DataFrame
