@@ -1,5 +1,5 @@
 module MLDemo_old
-export add_target_column!, dataframe_subset, boolean_unstack, number_with, run_decision_tree, top_n_values
+export add_target_column!, dataframe_subset, boolean_unstack, number_with, run_decision_tree
 
 using DataFrames
 using MLJ
@@ -76,15 +76,6 @@ function run_decision_tree(df::AbstractDataFrame, output::Symbol, RNG_VALUE)::Tu
 	f1_score = f1score(MLJ.mode.(yhat), y[test])
 
 	return acc, f1_score
-end
-
-"""
-	function top_n_values(df::DataFrame, col::Symbol, n::Int)::DataFrame
-
-Find top n values by occurence
-"""
-function top_n_values(df::DataFrame, col::Symbol, n::Int)::DataFrame
-	return first(sort(combine(nrow, groupby(df, col)), "nrow", rev=true), n)
 end
 
 end
