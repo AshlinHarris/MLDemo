@@ -104,7 +104,7 @@ function main()
 		#with_topic_2 |> display
 
 		# Generate composite DataFrame
-		composite_df = boolean_unstack(topic_2_df, :PATIENT, :DESCRIPTION)
+		composite_df = pivot(topic_2_df, :PATIENT, :DESCRIPTION)
 		add_target_column!(composite_df, :MISCARRIAGE, topic_1_only)
 
 		# Machine learning
