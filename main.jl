@@ -105,7 +105,7 @@ function main()
 
 		# Generate composite DataFrame
 		composite_df = pivot(topic_2_df, :PATIENT, :DESCRIPTION)
-		add_target_column!(composite_df, :MISCARRIAGE, topic_1_only)
+		add_label_column!(composite_df, topic_1_only, :MISCARRIAGE)
 
 		# Machine learning
 		if nrow(composite_df) == 0
