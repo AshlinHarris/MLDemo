@@ -1,6 +1,5 @@
 module MLDemo_old
-#export add_target_column!, dataframe_subset, boolean_unstack, number_with, run_decision_tree
-export dataframe_subset
+export add_target_column!, dataframe_subset, boolean_unstack, number_with, run_decision_tree
 
 using DataFrames
 using MLJ
