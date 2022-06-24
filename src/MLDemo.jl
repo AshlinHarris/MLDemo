@@ -1,7 +1,9 @@
 module MLDemo_old
 export dataframe_subset, boolean_unstack, number_with, run_decision_tree
 
-using DataFrames
+using DataFrames: AbstractDataFrame
+using DataFrames: Not
+using DataFrames: select
 using MLJ
 using MLJDecisionTreeInterface
 
