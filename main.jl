@@ -10,7 +10,7 @@ using Printf
 using Random: Random
 using Revise
 using PreprocessMD
-using StatsPlots
+using StatsPlots: groupedbar
 
 includet("src/MLDemo.jl")
 using .MLDemo_old
