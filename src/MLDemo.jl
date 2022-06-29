@@ -4,7 +4,6 @@ export dataframe_subset, run_decision_tree
 using DataFrames: AbstractDataFrame
 using DataFrames: Not
 using DataFrames: select
-#using MLJ
 using MLJ: @load
 using MLJ: accuracy
 using MLJ: evaluate
@@ -14,9 +13,6 @@ using MLJ: machine
 using MLJ: MLJ
 using MLJ: partition
 using MLJ: predict
-using MLJDecisionTreeInterface
-
-using StatsBase: countmap
 
 """
 	function add_target_column!(df::AbstractDataFrame, symb::Symbol, target_df::AbstractDataFrame)::Nothing
