@@ -6,8 +6,8 @@ using CSV: File
 using DataFrames
 using MLJ
 using Plots
-#using Printf
-using Random
+using Printf
+using Random: Random
 using Revise
 using PreprocessMD
 using StatsPlots
