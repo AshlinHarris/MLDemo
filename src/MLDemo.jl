@@ -1,5 +1,5 @@
 module MLDemo_old
-export dataframe_subset, boolean_unstack, number_with, run_decision_tree
+export dataframe_subset, number_with, run_decision_tree
 
 using DataFrames: AbstractDataFrame
 using DataFrames: Not
