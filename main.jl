@@ -3,10 +3,14 @@
 using ColorSchemes
 using ConfParser # Parse, modify, write to configuration files
 using CSV: File
-using DataFrames
+using DataFrames: DataFrame
+using DataFrames: ncol
+using DataFrames: Not
+using DataFrames: nrow
+using DataFrames: outerjoin
+using DataFrames: rename!
 using MLJ
 using Plots
-#using Printf
 using Random: Random
 using Revise
 using PreprocessMD
