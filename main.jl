@@ -1,7 +1,6 @@
 #!/usr/bin/env julia
 
-using ColorSchemes
-using ConfParser # Parse, modify, write to configuration files
+using ConfParser
 using CSV: File
 using DataFrames: DataFrame
 using DataFrames: ncol
