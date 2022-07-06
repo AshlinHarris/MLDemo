@@ -8,6 +8,7 @@ using DataFrames: Not
 using DataFrames: nrow
 using DataFrames: outerjoin
 using DataFrames: rename!
+using MLJDecisionTreeInterface: DecisionTreeClassifier
 using Plots
 using Random: Random
 using Revise
