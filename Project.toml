@@ -1,6 +1,5 @@
 [deps]
 CSV = "336ed68f-0bac-5ca0-87d4-7b16caf5d00b"
-ColorSchemes = "35d6a980-a343-548e-a6ea-1d62b119f2f4"
 ConfParser = "88353bc9-fd38-507d-a820-d3b43837d6b9"
 DataFrames = "a93c6f00-e57d-5684-b7b6-d8193f3e46c0"
 MLJDecisionTreeInterface = "c6f25543-311c-4c74-83dc-3ea6d1015661"
