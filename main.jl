@@ -8,7 +8,6 @@ using DataFrames: Not
 using DataFrames: nrow
 using DataFrames: outerjoin
 using DataFrames: rename!
-using MLJ
 using Plots
 using Random: Random
 using Revise
