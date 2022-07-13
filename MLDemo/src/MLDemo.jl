@@ -20,6 +20,8 @@ using .MLDemo_old
 
 global OUTFILES = []
 
+module MLDemo
+
 """
 	function clean()
 
@@ -215,4 +217,4 @@ function omop()
 	return nothing
 end
 
-main()
+end # module
