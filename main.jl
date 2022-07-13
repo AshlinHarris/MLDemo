@@ -215,3 +215,4 @@ function omop()
 	return nothing
 end
 
+main()
