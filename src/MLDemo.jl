@@ -14,6 +14,11 @@ using MLJ: MLJ
 using MLJ: partition
 using MLJ: predict
 
+function julia_main()::Cint
+	println("test")
+	return 0
+end
+
 """
 	function add_target_column!(df::AbstractDataFrame, symb::Symbol, target_df::AbstractDataFrame)::Nothing
 
